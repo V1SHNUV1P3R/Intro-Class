@@ -1,0 +1,477 @@
+<html>
+<head>
+
+	<style>
+		canvas{
+			background: #dddddd;
+		}
+	</style>
+
+	<script>
+
+		// This class represents a log object
+		class logClass{
+			constructor(logX, logY,				// Location
+						logWidth, logHeight, logImage)	// Dimensions
+			{
+				this.x = logX;
+				this.y = logY;
+				this.width = logWidth;
+				this.height = logHeight;
+
+				this.image = new Image();
+				this.image.src = logImage;
+			}
+
+			// This method will be called by the gameUpdate function.
+			// It should take care of all movement, including wrapping
+			// (the gameUpdate() function should not have to worry about wrapping)
+			wrapRL()
+			{
+				this.x -= 15
+
+				if(this.x == -100)
+				{
+					this.x = 800
+				}
+				
+			}
+			// This method will be called by the gameDraw function.
+			// It should draw a picture of the log on the screen.
+			draw()
+			{
+				log1.wrapRL()
+				c.drawImage(this.image, this.x, this.y, this.width, this.height)
+			}
+
+		}
+
+			var log1 = new logClass(50, 50, 100, 50, "log.png")
+
+
+		// Task #2 code (carClass) goes here
+				
+
+		class carClass
+		{
+			constructor(carX, carY,	// Location
+				carWidth, carHeight, carDirection)	// Dimensions
+				{
+					this.x = carX;
+					this.y = carY;
+					this.width = carWidth;
+					this.height = carHeight;
+					this.direction = carDirection;
+
+					this.image = new Image();
+					this.image.src = "Car2.png";
+				}
+
+			draw()
+			{
+				Car1.reverse()
+				c.drawImage(this.image, this.x, this.y, this.width, this.height)
+			}
+			reverse()
+			{
+				this.x += 15 * directXPosition
+
+				if(this.direction = "right")
+				{
+					if(this.x >= 700)
+					{
+						directXPosition *= -1
+
+						this.direction = "left"
+
+						this.image.src = "Car.png";
+					}
+				}
+				if(this.direction = "left")
+				{
+					if(this.x <= 0)
+					{
+						directXPosition *= -1
+
+						this.direction = "right"
+
+						this.image.src = "Car2.png";
+					}
+				}	
+			}
+
+		}
+
+		
+		var Car1 = new carClass(100, 200, 100, 50, "right")
+		
+
+		// This class represents the frog
+		class frogClass{
+			constructor(frogX, frogY,			// Location
+						frogWidth, frogHeight,	// Dimensions
+						frogDirection, frogImage)			// Can be "Up", "Down", "Left", or "Right"
+			{
+				
+				this.x = frogX
+				this.y = frogY
+				this.width = frogWidth
+				this.height = frogHeight
+
+				this.Direction = frogDirection;
+				this.image = new Image();
+				this.image.src = "frogUp.png";
+			}
+
+
+			// Methods for frog movement
+			hopLeft()
+			{
+				this.x -= 50;
+				this.image.src = "frogUp3.png";
+			}
+			hopRight()
+			{
+				this.x += 50;
+				this.image.src = "frogUp2.png";
+			}
+			hopUp()
+			{
+				this.y -= 50;
+				this.image.src = "frogUp.png";
+			}
+			hopDown()
+			{
+				this.y += 50;
+				this.image.src = "frogUp4.png";
+			}
+
+
+			// This method will be called by the gameDraw function.
+			// It should draw a picture of the frog on the screen.
+			draw()
+			{
+				c.drawImage(this.image, this.x, this.y, this.width, this.height)
+			}
+		
+			// This function returns true if this frog intersects "obj",
+			// where "obj" is either a car object or a log object.
+			// Returns false otherwise.
+			// Example: if (frog1.intersects(log1)){ ... }
+			intersects(obj){
+				if (this.x < obj.x + obj.width &&
+					this.x + this.width > obj.x &&
+					this.y < obj.y + obj.height &&
+					this.y + this.height > obj.y)
+				{
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+		}
+	
+		var Frogger = new frogClass(500, 500, 50, 50)
+		
+		class WinClass
+		{
+			constructor(WinX,WinY,WinWidth,WinHeight)
+			{
+				this.x = WinX
+				this.y = WinY
+				this.width = WinWidth
+				this.height = WinHeight
+			}
+			
+
+			draw()
+			{
+				c.fillRect(this.x, this.y, this.width, this.height)
+				c.fillStyle = "#0F0000"
+			}
+
+		}
+
+		var Win = new WinClass(0, 0, 800, 30)
+
+		class BackgroundClass
+		{
+			constructor(BackX, BackY, BackWidth, BackHeight)
+			{
+				this.x = BackX
+				this.y = BackY
+				this.width = BackWidth
+				this.height = BackHeight
+
+				this.image = new Image();
+				this.image.src = "Gamebackground.png";
+			}
+
+			draw()
+			{
+				c.drawImage(this.image, this.x, this.y, this.width, this.height)
+			}
+
+		}
+
+		var Background = new BackgroundClass(0,0,800,600)
+
+		class JumpscareClass
+		{
+			constructor(JumpX, JumpY, JumpWidth, JumpHeight)
+			{
+				this.x = JumpX
+				this.y = JumpY
+				this.width = JumpWidth
+				this.height = JumpHeight
+
+				this.image = new Image();
+				this.image.src = "Jumpscare.png";
+			}
+
+			draw()
+			{
+				c.drawImage(this.image, this.x, this.y, this.width, this.height)
+			}
+
+		}
+
+		var Jumpscare = new JumpscareClass(0,0,800,600)
+
+		class WinscreenClass
+		{
+			constructor(WinX, WinY, WinWidth, WinHeight, WinImage)
+			{
+				this.x = WinX
+				this.y = WinY
+				this.width = WinWidth
+				this.height = WinHeight
+
+				this.image = new Image();
+				this.image.src = "Winscreen.png";
+			}
+
+			draw()
+			{
+				c.drawImage(this.image, this.x, this.y, this.width, this.height)
+			}
+
+		}
+
+		var Winscreen = new WinscreenClass(0,0,800,600)
+
+
+		var directXPosition = 1; 
+
+		var sndDeath = new Audio('Frog death.wav');
+
+		win = 0;
+		lose = 0;
+
+		// Canvas context; used to call Canvas methods
+		var c;
+
+		// Canvas width and height.
+		var cWidth, cHeight;
+
+		// Stores the current keyboard state
+		var curkeys = [];
+		
+		// Stores keys that have been newly pressed since last update
+		var newkeys = [];
+
+		// The current game state, can be one of: "play", "win", "lose"
+		// You won't be working with this until Task #4
+		var gameState = "play";
+
+		// Initializes entire game framework. This method should only be called
+		// once, by the body onload event handler.
+		function gameFrameworkInit(){		
+			// Initialize key arrays
+			for (i = 0; i < 256; i++){
+				curkeys[i] = false;
+				newkeys[i] = false;
+			}
+		
+			// Initialize global variables for canvas
+			c = myCanvas.getContext('2d');
+			cWidth = myCanvas.width;
+			cHeight = myCanvas.height;
+
+
+			// Start listeners for getting keyboard state
+	        window.addEventListener('keydown',
+	        						 function(e){
+										if (!curkeys[e.keyCode]){
+											curkeys[e.keyCode] = true;
+											newkeys[e.keyCode] = true;
+										}
+									 }
+	        					   );
+	        
+	        window.addEventListener('keyup',
+	        						 function(e){ curkeys[e.keyCode] = false; }
+	        					   );
+
+			// Schedule the update function to be called right before the next repaint.
+			// (At the end of the update function, it will schedule itself to be called
+			// again before the NEXT repaint, and so on.
+			window.requestAnimationFrame(gameUpdate);
+		}
+
+		// Main update loop for the entire game
+		function gameUpdate(){
+
+			//if the gamestate is play,
+			if(gameState == "play")
+			{
+				if(newkeys[37])		//left arrow key
+				{
+					Frogger.hopLeft();
+				}
+				if(newkeys[39])		//right arrow key
+				{
+					Frogger.hopRight();
+				}
+				if(newkeys[38])		//up arrow key
+				{
+					Frogger.hopUp();
+				}
+				if(newkeys[40])		//down arrow key
+				{
+					Frogger.hopDown();
+				}
+				if(newkeys[72])		//down arrow key
+				{
+					Frogger.Hardcore()
+				}
+				
+				
+
+
+
+			}
+			if(gameState == "win")
+			{
+
+				
+
+				if(newkeys[32])	//Space bar
+					{
+						Frogger.x = 500;
+						Frogger.y = 500;
+
+						win++
+
+						gameState = "play"
+					}
+			}
+			if(gameState == "lose")
+			{
+
+
+				if(newkeys[32])	//Space bar
+					{
+						Frogger.x = 500;
+						Frogger.y = 500;
+
+						lose++
+
+						gameState = "play"
+					}
+			}
+
+			if(Frogger.intersects(log1))
+			{
+				//change the gameState to lose
+				gameState = "lose";
+
+				sndDeath.play()
+			}
+			if(Frogger.intersects(Car1))
+			{
+				//change the gameState to lose
+				gameState = "lose";
+
+				sndDeath.play()
+			}
+			if(Frogger.intersects(Win))
+			{
+				//change the gameState to lose
+				gameState = "win";
+			}
+			
+
+
+
+			
+
+			//
+			// DO NOT ADD ANY CODE BELOW THIS, OR MODIFY ANY CODE BELOW THIS
+			//
+
+			// Reset newkeys
+			for (i = 0; i < 256; i++){
+				newkeys[i] = false;
+			}
+
+			// At the end of the update function, repaint the screen
+			gameDraw();
+				
+			// Last thing the update function does is to schedule itself to be called
+			// again before the next repaint
+			window.requestAnimationFrame(gameUpdate);
+		}
+
+
+		// Main draw loop for the entire game
+		function gameDraw(){
+			// Clear the canvas before we draw the current frame
+			c.clearRect(0,0,cWidth,cHeight);
+
+			
+
+			if(gameState == "play")
+			{
+				Background.draw()
+				log1.draw()
+				Car1.draw()
+				Frogger.draw()
+				Win.draw()
+				c.font = "30px Times";
+				c.fillText("Win: " + win, 60, 540)
+				c.font = "30px Times";
+				c.fillText("Losses: " + lose, 60, 570)
+			}
+			if(gameState == "win")
+			{
+				Winscreen.draw()
+				c.font = "30px Times";
+				c.fillText("Well played, Can't belieeve eet." , 200, 500);
+				c.font = "30px Times";
+				c.fillText("Wins: " + win, 60, 540)
+			}
+			if(gameState == "lose")
+			{
+				Jumpscare.draw()
+				c.font = "30px Times";
+				c.fillStyle = "#FF0000";
+				c.fillText("You lost, Can't belieeve eet. Press space" , 100, 400);
+				c.font = "30px Times";
+				c.fillText("Losses: " + lose, 60, 570)
+			}
+		}
+
+
+	</script>
+
+</head>
+
+<body onload="gameFrameworkInit()">
+	
+	<canvas id="myCanvas" width="800" height="600"></canvas>
+	<br>
+	
+</body>
+</html>

@@ -1,0 +1,568 @@
+<html>
+<head>
+
+	<link rel=stylesheet type="text/css" href="BreadandCheese.css">
+
+	
+
+	<script>
+
+		// This class is for the user-controlled bread object
+		class breadClass{
+
+			// Constructor
+			constructor(){
+				this.x = 325;
+				this.y = 500;
+				this.width = 150;
+				this.height = 40;
+
+				this.img = new Image();
+				this.img.src = "Bread.png";
+			}
+
+			// Movement methods - don't let bread move off the screen
+			moveRight()
+			{
+				//If the right side of the bread is less than the
+				//width of the canvas - 5.(Unable to leave canvas.)
+				if(this.x + this.width < cWidth-5)
+				{
+					//Move the bread object right by 5 pixels.
+					this.x += 5;
+				}
+			}
+			moveLeft()
+			{
+
+				//If the left side of the bread is greater than the
+				//left side of the canvas
+				if(this.x > 5)
+				{
+					this.x -= 5;
+				}
+			}
+			moveUp()
+			{
+				//If the top side of the bread is greater than the
+				//top side of the canvas
+				if(this.y > 5)
+				{
+					//move it down
+					this.y -= 5;
+				}
+			}
+			moveDown()
+			{
+				//Same thing here
+				if(this.y + this.height < cHeight-5)
+				{
+					this.y += 5;
+				}
+			}
+
+			// Draw method
+			draw(){
+				c.drawImage(this.img, this.x, this.y, this.width, this.height);
+			}
+		}
+
+
+		// This class is for the cheese object
+		class cheeseClass{
+			// Constructor
+			constructor(){
+				this.x = 50;
+				this.y = 100;
+				this.width = 40;
+				this.height = 40;
+
+				// dx and dy represent the cheese object's speed in
+				// the x- and y-direction respectively
+				this.dx = 5;
+				this.dy = 5;
+
+				this.img = new Image();
+				this.img.src = "Cheese.png";
+			}
+
+			// This function returns true if this cheese intersects "obj", where "obj" is
+			// either a tomato object or a bread object. Returns false otherwise.
+			intersects(obj){
+				if (this.x < obj.x + obj.width &&
+					this.x + this.width > obj.x &&
+					this.y < obj.y + obj.height &&
+					this.y + this.height > obj.y)
+				{
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+
+
+			// Main update function for cheese, takes care of:
+			//		1. cheese movement
+			//		2. edge logic (bounce off of edges, die at the bottom edge)
+			//		3. bounce off of bread
+			//		4. eliminate tomatoes that we hit
+			update()
+			{
+				// Move
+				this.x += this.dx;
+				this.y += this.dy;
+
+
+				// Bounce off of left wall
+				if (this.x < 0 && this.dx < 0)
+				{
+					this.dx *= -1;
+					sndBoing.currentTime = 0;
+					sndBoing.play()
+				}
+
+				// Bounce off of right wall
+				if (this.x + this.width > cWidth && this.dx > 0)
+				{
+					this.dx *= -1;
+					sndBoing.currentTime = 0;
+					sndBoing.play()
+				}
+
+				// Bounce off of top
+				if (this.y < 0 && this.dy < 0)
+				{
+					this.dy *= -1;
+					sndBoing.currentTime = 0;
+					sndBoing.play()
+				}
+
+				// Bottom edge: cheese dies, start new cheese
+				if (this.y + this.height > cHeight && this.dy > 0)
+				{
+					Lives--
+					gameState = "gameover"
+					sndOops.currentTime = 0;
+					sndOops.play()
+				}
+
+				// bounce off of bread
+				if (this.intersects(bread))
+				{
+					this.dy *= -1
+					sndBoing.currentTime = 0;
+					sndBoing.play()
+				}
+
+				// eliminate tomatoes that we hit
+				for (i = 0; i < 16; i++)
+				{
+					if (tomatoArray[i].bVisible == true &&
+						this.intersects(tomatoArray[i]))
+					{
+						tomatoArray[i].bVisible = false;
+
+						Points += 10
+						sndSplat.currentTime = 0;
+						sndSplat.play()
+
+						if (this.dy < 0)
+						{
+								this.dy *= -1;	
+						}
+						
+					}
+				}
+
+			}
+			// Draw method
+			draw(){
+				c.drawImage(this.img, this.x, this.y, this.width, this.height);
+			}
+		}
+
+		// This class is for the on-screen tomato objects
+		class tomatoClass
+		{
+			// Constructor
+			constructor(tomatoX, tomatoY){
+				this.x = tomatoX;
+				this.y = tomatoY;
+				this.width = 40;
+				this.height = 40;
+				this.bVisible = true;	// tomatoes start off being visible
+
+				this.img = new Image();
+				this.img.src = "Tomato.png";
+			}
+
+			// Draw method
+			draw()
+			{
+				if(this.bVisible)
+				{
+					c.drawImage(this.img, this.x, this.y, this.width, this.height);
+				}
+			}
+		}
+
+		class timerClass
+		{
+			constructor(timeIntervalMS)
+			{
+				// Initialize oldTime to be the time of creation
+				this.oldTime = new Date();
+
+				// Set interval to elapse before the timer fires
+				this.interval = timeIntervalMS;
+				
+				// Keeps track of the # of milliseconds accumulated since the last firing
+				this.accum = 0;
+				
+				
+			}
+
+			isReady(){
+				var curTime = new Date();
+				var delta = curTime - this.oldTime;
+
+				this.accum += delta;
+				this.oldTime = curTime;
+				if (this.accum > this.interval){
+					this.accum = 0;
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+
+
+		}
+	
+		var directXPosition = 1; 
+
+		class BackgroundClass
+		{
+			constructor()
+			{
+				this.x = 0
+				this.y = 0
+				this.width = 800
+				this.height = 600
+
+				this.image = new Image();
+				this.image.src = "maxresdefault.jpg";
+			}
+
+			draw()
+			{
+				c.drawImage(this.image, this.x, this.y, this.width, this.height)
+			}
+
+		}
+		class JumpscareClass
+		{
+			constructor()
+			{
+				this.x = 0
+				this.y = 0
+				this.width = 800
+				this.height = 600
+
+				this.image = new Image();
+				this.image.src = "AngryBirdsSplash.gif";
+			}
+
+			draw()
+			{
+				c.drawImage(this.image, this.x, this.y, this.width, this.height)
+			}
+
+		}
+		class WinClass
+		{
+			constructor()
+			{
+				this.x = 0
+				this.y = 0
+				this.width = 800
+				this.height = 600
+
+				this.image = new Image();
+				this.image.src = "Winscreen.jpg";
+			}
+
+			draw()
+			{
+				c.drawImage(this.image, this.x, this.y, this.width, this.height)
+			}
+
+		}
+
+
+
+		//All sounds
+		var sndBoing = new Audio('boing.wav');
+		var sndSplat = new Audio('splat.mp3'); 
+		var sndOops = new Audio('oops.mp3');
+		var sndBackground = new Audio('bad piggies drip.mp3')
+
+
+
+
+
+		//The points and the lives
+		var Points = 0;
+		var Lives = 3
+		//Background GIF
+
+		
+		// Canvas context; used to call Canvas methods
+		var c;
+
+		// Canvas width and height.
+		var cWidth, cHeight;
+
+		// Stores the current keyboard state
+		var curkeys = [];
+		
+		// Stores keys that have been newly pressed since last update
+		var newkeys = [];
+
+		// Our global variables (bread, cheese, tomatoes)
+		var bread, cheese;
+		var tomatoArray = [];
+
+		// The current game state, can be one of: "play", "gameover"
+		var gameState = "First";
+
+		// Initializes entire game framework. This method should only be called
+		// once, by the body onload event handler.
+		function gameFrameworkInit(){
+			// Initialize key arrays
+			for (i = 0; i < 256; i++){
+				curkeys[i] = false;
+				newkeys[i] = false;
+			}
+		
+			// Initialize global variables for canvas
+			c = myCanvas.getContext('2d');
+			cWidth = myCanvas.width;
+			cHeight = myCanvas.height;
+
+			// Initialize global variables for our game
+			bread = new breadClass();
+			cheese = new cheeseClass();
+			Background = new BackgroundClass()
+			Jumpscare = new JumpscareClass()
+			Win = new WinClass()
+			
+			//Splash screen
+			var Timer = new timerClass(3000)
+			var Ready = true;
+			// Populate tomatoArray[] with 16 tomatoes spread out near the top of the canvas
+			for (i = 0; i < 16; i++){
+				tomatoArray[i] = new tomatoClass(50*i, 20);
+			}
+
+			// Start listeners for getting keyboard state
+	        window.addEventListener('keydown',
+	        						 function(e){
+										if (!curkeys[e.keyCode]){
+											curkeys[e.keyCode] = true;
+											newkeys[e.keyCode] = true;
+										}
+									 }
+	        					   );
+	        
+	        window.addEventListener('keyup',
+	        						 function(e){ curkeys[e.keyCode] = false; }
+	        					   );
+
+			// Schedule the update function to be called right before the next repaint.
+			// (At the end of the update function, it will schedule itself to be called
+			// again before the NEXT repaint, and so on.
+			window.requestAnimationFrame(gameUpdate);
+		}
+
+
+
+		// Main update loop for the entire game
+		function gameUpdate()
+		{
+
+			if(gameState == "First")
+			{
+				// gameState = "splash"
+	
+				if(newkeys[32])	//Space bar
+				{
+					gameState = "play"
+				}
+			}
+			// if(gameState == "splash")
+			// {
+			// 	c.drawImage()
+
+			// }
+			if(gameState == "play")
+			{
+				sndBackground.play()
+
+				if(curkeys[37])		//left arrow key
+				{
+					bread.moveLeft();
+				}
+				if(curkeys[39])		//right arrow key
+				{
+					bread.moveRight();
+				}
+				if(curkeys[38])		//up arrow key
+				{
+					bread.moveUp();
+				}
+				if(curkeys[40])		//down arrow key
+				{
+					bread.moveDown();
+				}
+				cheese.update()
+			}
+			if(gameState == "gameover")
+			{
+				if(newkeys[32])
+				{
+					gameState = "play"
+					cheese.x = 50
+					cheese.y = 100
+					bread.x = 325
+					bread.y = 500
+				}
+
+			}
+			if(Lives == 0)
+			{
+				gameState = "Dead"
+
+				if(newkeys[82])
+				{
+					gameState = "play"
+					cheese.x = 50
+					cheese.y = 100
+					bread.x = 325
+					bread.y = 500
+
+					for (i = 0; i < 16; i++)
+					{
+					tomatoArray[i] = new tomatoClass(50*i, 20);
+					}
+
+					Lives = 3
+					Points = 0
+				}
+			}
+			if(Points == 160)
+			{
+				gameState = "win"
+			}
+			if(gameState == "win")
+			{
+				if(newkeys[82])
+				{
+					gameState = "play"
+					cheese.x = 50
+					cheese.y = 100
+					bread.x = 325
+					bread.y = 500
+
+					for (i = 0; i < 16; i++)
+					{
+					tomatoArray[i] = new tomatoClass(50*i, 20);
+					}
+
+					Lives = 3
+					Points = 0
+				}
+
+			}
+			// DO NOT ADD OR MODIFY ANY CODE BELOW HERE
+			// Reset newkeys
+			for (i = 0; i < 256; i++){
+				newkeys[i] = false;
+			}
+
+			// At the end of the update function, repaint the screen
+			gameDraw();
+				
+			// Last thing the update function does is to schedule itself to be called
+			// again before the next repaint
+			window.requestAnimationFrame(gameUpdate);
+		}
+		// Main draw loop for the entire game
+		function gameDraw()
+		{
+			// Clear the canvas before we draw the current frame
+			c.clearRect(0, 0, cWidth, cHeight);
+
+
+			if(gameState == "First")
+			{
+				Background.draw()
+
+				c.font = "30px Arial"
+				c.fillStyle = "#00A2FF";
+				c.fillText("BREAD AND CHEESE.", 50, 100)
+				c.fillText("Use arrow keys to move bread", 50, 130)
+				c.fillText("Use the cheese richochet to destroy tomato.", 50, 160)
+				c.fillText("Destroy all tomato.", 50, 190)
+				c.fillText("Press space to begin.", 50, 220)
+
+				c.fillText("You get this ALL NEW RARE PURPLE BIRD.", 50, 520)
+				c.fillText(":O", 300, 420)
+			}
+
+			if(gameState == "play")
+			{
+				c.fillText("Points: " + Points, 50, 500)
+				c.fillText("Lives: " + Lives, 600, 550)
+
+				
+				bread.draw(); 
+				cheese.draw();
+				for (i = 0; i < 16; i++){
+					tomatoArray[i].draw();
+				}
+
+			}
+			if(gameState == "gameover")
+			{
+				
+				c.fillText("No pizza for you", 50, 400)
+				c.fillText("Press Space you clown", 50, 440)
+				
+			}
+			if(gameState == "Dead")
+			{	
+				Jumpscare.draw()
+				c.fillText("Cant Believee eet.", 400,300)
+				c.fillText("Press R", 350,250)
+			}
+			if(gameState == "win")
+			{
+				Win.draw()
+				c.fillText("Cant Believee eet.", 100,500)
+				c.fillText("Well played you clown.", 100,530)
+				c.fillText("Press R", 100,570)
+			}
+
+		}
+
+	</script>
+
+</head>
+<body onload="gameFrameworkInit()">
+	
+	<canvas id="myCanvas" width="800" height="600"></canvas>
+</body>
+</html>
