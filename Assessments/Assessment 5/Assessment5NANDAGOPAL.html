@@ -1,0 +1,228 @@
+<html>
+	<head>
+
+		<style>
+			canvas
+			{
+				background: #dddddd;
+			}
+		</style>
+
+		<script>
+
+
+			//Global variables for images
+			var bear1 = "happybear.jpeg"
+			var bear2 =	"angrybear.jpeg"
+
+			//Boolean
+			BearHappy = true;
+
+
+			// Class that represents a bear
+			class bearClass
+			{
+				
+				// This constructor takes in the following parameters:
+				//	1. bearX is the x-coordinate of the bear's location
+				//	2. bearY is the y-coordinate of the bear's location
+				//	3. bearHappy is a boolean, where true means the bear is happy
+				//			and false means the bear is not happy
+				constructor(BearImage, bearX, bearY, bearHappy)
+				{
+					// ADD YOUR CONSTRUCTOR CODE HERE
+
+					this.x = bearX;
+					this.y = bearY;
+					this.Happy = bearHappy
+					this.image = new Image();
+					this.image.src = BearImage;
+
+				}
+				draw()//Allows this to draw a different rectangle or quad
+				{
+					//The way to make the rectangle 
+					c.drawImage(this.image, this.x, this.y)
+				}
+				//Recangle movement
+				moveLeft()
+				{
+					this.x-= 10;
+				}
+				moveUp()
+				{
+					this.y-= 10;
+				}
+				moveDown()
+				{
+					this.y+= 10;
+				}
+				moveRight()
+				{
+					this.x+= 10;
+				}
+				//Rectangle movement ends here
+				
+				//Different bear emotions
+				HappyBear()
+				{
+					this.image.src = "happybear.jpeg"
+				}
+				AngryBear()
+				{
+					this.image.src = "angrybear.jpeg"
+				}
+				//emotions end here
+			}
+
+			//The bear Rectangle
+			var BearRect = new bearClass("happybear.jpeg",300, 200, true);
+
+			// Canvas context; used to call Canvas methods
+			var c;
+
+			// Canvas width and height.
+			var cWidth, cHeight;
+
+			// Stores the current keyboard state
+			var curkeys = [];
+			
+			// Stores keys that have been newly pressed since last update
+			var newkeys = [];		
+					
+			// Initializes entire game framework. This method should only be called
+			// once, by the body onload event handler.
+			function gameFrameworkInit()
+			{		
+				// Initialize key arrays
+				for (i = 0; i < 256; i++){
+					curkeys[i] = false;
+					newkeys[i] = false;
+				}
+			
+				// Initialize global variables for canvas
+				c = myCanvas.getContext('2d');
+				cWidth = myCanvas.width;
+				cHeight = myCanvas.height;
+
+
+				// Start listeners for getting keyboard state
+				window.addEventListener('keydown',
+										function(e){
+											if (!curkeys[e.keyCode]){
+												curkeys[e.keyCode] = true;
+												newkeys[e.keyCode] = true;
+											}
+										}
+									);
+				
+				window.addEventListener('keyup',
+										function(e){ curkeys[e.keyCode] = false; }
+									);
+
+				// Schedule the update function to be called right before the next repaint.
+				// (At the end of the update function, it will schedule itself to be called
+				// again before the NEXT repaint, and so on.
+				window.requestAnimationFrame(gameUpdate);
+			}
+
+			function gameUpdate()
+			{
+				//Movement with arrow keys
+				if(curkeys[37])	//Left arrow
+				{
+					BearRect.moveLeft();	// moves left (subtract)
+				}
+				if(curkeys[39]) //Right arrow
+				{
+					BearRect.moveRight()      //moves right (add)
+					
+				}
+				if(curkeys[38]) //Up arrow
+				{
+					BearRect.moveUp()     //moves up(subtract)
+					
+				}
+				if(curkeys[40])	//Down arrow
+				{
+					BearRect.moveDown()       //moves down(add)
+				
+				}
+			//movement ends here
+
+		
+			if(BearHappy == true)
+			{
+				BearRect.HappyBear()
+			}
+			if(BearHappy == false)
+			{
+				BearRect.AngryBear()
+			}
+
+
+
+
+
+
+			if(newkeys[72])	//H key
+			{
+				//Switching bear emotions
+				if(BearHappy == false)
+				{
+				//Set the cymbal's boolean false
+				//It will stop the sound from playing
+				BearHappy = true;
+				}	
+				else
+				{
+					BearHappy = false
+				}
+			}
+			if(newkeys[65])	//A key
+			{
+				//Switching bear emotions
+				if(BearHappy == true)
+				{
+				//Set the cymbal's boolean false
+				//It will stop the sound from playing
+				BearHappy = false;
+				}	
+				else
+				{
+					BearHappy = true;
+				}
+			}
+				
+				// DO NOT TOUCH ANY OF THE BELOW CODE
+
+				// Reset newkeys
+				for (i = 0; i < 256; i++){
+					newkeys[i] = false;
+				}
+
+				// At the end of the update function, repaint the screen
+				gameDraw();
+					
+				// Last thing the update function does is to schedule itself to be called
+				// again before the next repaint
+				window.requestAnimationFrame(gameUpdate);
+			}
+
+			function gameDraw()
+			{
+				// Clear the canvas before we draw the current frame
+				c.clearRect(0,0,cWidth,cHeight);
+
+				// ADD YOUR DRAW CODE HERE
+
+				BearRect.draw()
+			}
+		</script>
+	</head>
+	<body onload="gameFrameworkInit()">
+		
+		<canvas id="myCanvas" width="800" height="600"></canvas>
+
+	</body>
+</html>
