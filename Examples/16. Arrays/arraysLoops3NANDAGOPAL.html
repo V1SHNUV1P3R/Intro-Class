@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <title>Alex gaming</title>
+    <script>
+            //Each entry of this array is a string indicating
+            // how many bottle of soda are left on the wall
+            // after taking down[index] bottles.
+            var numBottlesRemaining = [];
+          
+           //Each entry of this array holds a string with [index] X's
+           
+            var repatedX = [];
+
+            function fillArray()
+            {
+              
+              
+              
+             for(var i = 100; i >= 0; i--)
+                {
+                    //make a loop that will fill our numBotlesRemaining
+                    //aray with exactly 101 values/objects
+                    numBottlesRemaining.push(i + " Bottles left <br>");
+                }
+
+                console.log(numBottlesRemaining)
+
+               //This loop is the same as above, but will control what
+               //we SEE on our page, NOT what gets PUSHED into the array
+              
+            }
+            function displayElements()
+            {
+                idDivOutput.innerHTML = numBottlesRemaining;
+            }
+            function ShowRepatedX()
+            {
+                for(var x = 0; x <=100; x++)
+                {
+                    console.log(repeatedX)
+                }
+                
+
+
+            }
+            
+        </script>
+
+        <style>
+
+        </style>
+
+    </head>
+    <body onload="fillArray()">
+        
+
+        <input type=button value="Display elements" onclick="displayElements()">
+        <br><br>
+        <input type=button value="Show Repated X" onclick="ShowRepatedX()">
+
+
+        <div id = "idDivOutput" ></div>
+
+    </body>
+
+
+</html>

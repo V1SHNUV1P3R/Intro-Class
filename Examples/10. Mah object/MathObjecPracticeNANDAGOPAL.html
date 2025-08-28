@@ -1,0 +1,147 @@
+<html>
+    <head>
+            <title>Math pbject practice</title>
+
+    <style>
+
+
+    </style>
+
+
+        <script>
+                function genRandomNum1()
+
+                {
+                    var randNum = Math.random();
+
+                    alert(randNum)
+                }
+                function genRandomInt2()
+                {
+                    var randNum = Math.random()*6;
+                    var randInt = Math.round(randNum);
+
+                    alert(randInt)
+                }
+                function genRandomInt3()
+                    {
+                        var randNum = Math.random();
+                        randNum = randNum*39;
+                        randNum = randNum+=14;
+                    
+                    var randInt= Math.round(randNum);
+
+                    alert(randInt)
+                    }
+                    function genRandomInt4()
+                    {
+                        var randNum = Number(document.getElementById("idTxtInput").value);
+                     if(document.getElementById("idTxtInput").value < 1)
+                        {
+                        document.getElementById("idDivOutput").innerHTML = "ERROR";
+
+                     return;
+                      }
+                      randNum = randNum*10;
+                        randNum = Math.round(randNum);
+                        randNum = randNum/10
+
+                        document.getElementById("idDivOutput").innerHTML = randNum;
+                  
+                    }
+                  
+                  
+                  
+                  
+                  
+                    function genRandomInt5(){
+                        var randNum = Number(document.getElementById("idTxtInput").value);
+                   
+                        if(document.getElementById("idTxtInput").value < 1)
+                        {
+                        document.getElementById("idDivOutput").innerHTML = "ERROR";
+
+                        return;
+                        }
+                        
+                        randNum = randNum*100;
+                        randNum = Math.round(randNum);
+                        randNum = randNum/100;
+
+                        document.getElementById("idDivOutput").innerHTML = randNum;
+                        
+            
+               
+               
+               
+                }
+                function getIntBetween()
+                {
+                    var min = Number(document.getElementById("idTxtMin").value);
+                    var max = Number(document.getElementById("idTxtMax").value);
+
+                    //generate and store our random integer between the minimum and maximum values
+
+                    var randInt = Math.floor(Math.random() * (max - min + 1) ) + min;
+
+                    //alert our randomly generated number
+                    alert(randInt)
+
+                }
+
+        </script>
+
+</head>
+
+   
+   
+   
+    <body>
+      
+     
+
+
+        
+        Random integers
+        <input type="text" id="idTxtInput">
+        
+      
+      
+        <input type="button" id="idBtnTask1" value="Task 1" onclick="genRandomNum1()">
+        <br><br>
+        <input type="button" id="idBtnTask2" value="Task 2" onclick="genRandomInt2()">
+        <br><br>
+        <input type="button" id="idBtnTask3" value="Task 3" onclick="genRandomInt3()">
+        <br><br>
+        <input type="button" id="idBtnTask4" value="Task 4" onclick="genRandomInt4()">
+        <br><br>
+        <input type="button" id="idBtnTask5" value="Task 5" onclick="genRandomInt5()">
+        <br><br>
+
+
+       
+       
+       
+       
+       Between the min and Max
+       <br><br>
+        Min:<input type="text" id="idTxtMin">
+        <br><br>
+        Max:<input type="text" id="idTxtMax">
+        <br><br>
+
+        <input type="button" value= "Between Min + Max" onclick="getIntBetween()">
+
+
+        <div id="idDivOutput"></div>
+
+
+
+    </body>
+
+
+
+</html>
+
+
+

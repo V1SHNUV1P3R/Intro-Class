@@ -1,0 +1,79 @@
+<html>
+<head>
+        <title> Here we go again! </title>
+
+        <style type="text/css">
+                    body{
+                            background-image: url("flowers.jpg");
+                            text-align: center;
+
+                    }
+
+                    h1{
+                            color: FF7000;
+                    }
+
+                    .message{
+                            color: blue;
+                            font-size: 18pt;
+                     }
+        </style>
+
+        <script>
+                function submitName(){
+                        // Grab the text that the user typed into text box
+                    var personName = document.getElementById("idTxtName").value;
+
+                        // If they didn't type in a name, then the greeting should
+                        // just say "Hello World" instead of to a specific name
+                        if (personName == "Name"){
+                                personName = "World"
+                        }
+
+                        document.getElementById("idDivShowText").innerHTML = "Hello, " + personName + "!";
+                        document.getElementById("idBtnSubmitName").style.color = "red";
+                        document.getElementById("idTxtName").style.backgroundColor = "blue";
+                        window.alert("Notice the differences?");
+
+                    }
+
+            </script>
+    </head>
+
+<body>
+        <h3>Welcome to the</h3>
+        <h2>Wonderful World of </h2>
+        <h1>HTML</h1>
+        <hr width=82% />
+
+        <form>
+                <!-- Create a text box for the user to type in his or her name -->
+                Enter your name for a personalized greeting:
+                <input type=text id="idTxtName" value="Name">
+
+                <br>
+
+                <!--This button makes some changes to the page -->
+                Would you like to see a message (and some other interesting changes)?
+                <input type="button" id="idBtnSubmitName" value="Yes!" onClick="submitName()">
+
+                <!-- This button should undo all the changes made by the previous button -->
+                <input type="button" id="idBtnStartOver" value="Start over">
+
+                <!--This gives you a thicker horizontal rule -->
+                <hr size=10 />
+
+         </form>
+
+        <img src="scooby.gif" width=200 />
+
+        <!-- This DIV will be used later to display a message -->
+        <div id=idDivShowText class=message>What can we do with event handlers and the DOM model?</div>
+
+        <h1>That's</h1>
+        <h3>all</h3>
+        <h6>folks!</h6>
+
+</body>
+
+</html>

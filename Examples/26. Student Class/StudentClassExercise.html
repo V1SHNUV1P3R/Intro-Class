@@ -1,0 +1,62 @@
+<html>
+<head>
+    <script>
+        //Define the student class, which represeents a student object.
+        //We start with three characteristics
+        //1.Name(string)
+        //2.GradYear(string)
+        //3.ID(bool)
+        class studentClass
+        {
+                constructor(studentName, studentGradYear, studentID)
+                {//Use the passed-in parameters to define this particular object's atributes
+                this.Name = studentName;
+                this.Year = studentGradYear;
+                this.ID = studentID;
+
+                }
+            //Define a method, alertInfo(), for a fruit object.
+            //This method alerts the object attributes.
+            ShowInfo()
+            {
+                var output = "Name: " + this.Name + "\n";
+                output += "Grad Year: " + this.Year + "\n";
+                output += "ID: " + this.ID;
+            
+
+                alert(output);
+            }
+        }
+        //Create two student objects (Each one is an instance of the studentClass)
+        var Student1 = new studentClass("Alexander Johhanson", "2023", "427104")
+        var Student2 = new studentClass("Vishnu Nandagopal", "2026", "433796")
+        var Student3 = new studentClass("Tom Johnson", "2025", "694200")
+
+
+        function updateInfo1()
+        {
+            //Update st1's ID  #
+            Student1.ID = idTxtBox.value;
+            Student1.Name = idTxtYear.value;
+            Student1.GradYear = idTxtName.value;
+            //call the showinfo method for st1
+            Student1.ShowInfo();
+        }
+
+    
+       
+    </script>
+</head>
+
+<body onload= "Student1.ShowInfo(); Student2.ShowInfo()">
+   ID: <input type="text" id="idTxtBox">
+   <br>
+   GradYear: <input type="text" id="idTxtYear">
+   <br>
+   Name <input type="text" id="idTxtName">
+   <br><br>
+    <input type="button" value="update student 1" onclick="updateInfo1()">
+   
+
+</body>
+</html>

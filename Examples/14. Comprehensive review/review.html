@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <title></title>
+
+        <link rel=stylesheet type="text/css" href="reviewStyleSheet.css">
+    
+    </head>
+
+    <body>
+        <script>
+        function exTextAlert()
+        {
+            var Text1 = idTxtBox1.value
+            var Text2 = idTxtBox2.value
+            var output;
+
+            if(Text1 == Text2)
+            {
+                output = "Oh hey, you typed in the same thing twice: " + Text1;
+                alert(output);
+            }
+            if(Text1 != Text2)
+            {
+                output = "Your two words are " + Text1 + " and " + Text2 + " .What connection do these two words have? ";
+                alert(output);
+            }
+           
+        }
+            function exCalcOutput()
+            {
+                var Num1 = Number(idTxtNum1.value)
+                var Num2 = Number(idTxtNum2.value)
+                var answer = Num1 + Num2
+                var output = "When you add " + Num1 + " and " + Num2 + " together, you get " + answer + "!!"
+
+                document.getElementById("idDivOutput").innerHTML = output;
+            }
+            function rollOverEffect()
+            {
+                value="Success!"
+
+            }
+
+
+        </script>
+
+
+
+     Word 1:<input type=text id="idTxtBox1">
+     <br>
+     Word 2:<input type=text id="idTxtBox2">
+        <br><br>
+     Number 1:<input type=text id="idTxtNum1">
+     <br>
+     Number 2:<input type=text id="idTxtNum2">
+        <br>
+     <input type=button value="Alert Message" onclick="exTextAlert()">
+     <input type=button value="Output Calculation" onclick="exCalcOutput()" onMouseOver="rollOverEffect()">
+     <input type=button value="Check Word Length">
+
+     <div id="idDivOutput"></div>
+
+</body>
+
+
+</html>

@@ -1,0 +1,92 @@
+<html> 
+    <head>
+        
+        <title>Dhruv gaming</title>
+
+        <style></style>
+
+
+
+    </head>
+
+<body>
+    <script>
+        function displayCalculation()
+        {
+            var input1 = Number(document.getElementById("idTxtNum1").value);
+            var input2 = Number(document.getElementById("idTxtNum2").value);
+            var operator = idTxtOperator.value;
+            
+            var answer;
+
+        if(operator == "+")
+        {
+            
+          answer = input1 + input2;
+      
+          var output = input1 + operator + input2 + " = " + answer;
+    
+            alert(output);
+        
+        }
+        else if(operator == "-")
+        {
+            
+            answer = input1 - input2;
+      
+        var output = input1 + operator + input2 + " = " + answer;
+
+        alert(output);
+        }
+        else if(operator == "*")
+        {
+            answer = input1 * input2;
+      
+        var output = input1 + operator + input2 + " = " + answer;
+
+        alert(output);
+        }
+        else if(operator == "/")
+        {
+            answer = input1 / input2;
+      
+        var output = input1 + operator + input2 + " = " + answer;
+
+        alert(output);
+        }
+        else if(input1 == "")
+        {
+            alert("Input a number");
+
+        }
+
+
+
+
+        }
+
+
+    </script>
+
+
+
+
+
+
+<input type=text id="idTxtNum1"> First Number
+<br><br>
+<input type=text id="idTxtNum2"> Second number
+<br><br><br>
+<input type=text id="idTxtOperator">Input the operator (+,-,*,/)
+<br><br>
+<input type=button value="display calculation" onclick="displayCalculation()">
+
+
+
+
+
+</body>
+
+
+
+</html>

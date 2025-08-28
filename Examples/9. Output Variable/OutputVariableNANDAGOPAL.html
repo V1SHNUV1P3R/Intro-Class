@@ -1,0 +1,49 @@
+<html>
+        <title>Scout gaming</title>
+        <link rel=stylesheet type="text/css" href="myStyleNANDAGOPAL.css">
+       
+       <style>
+
+        </style>
+    <head>
+
+    </head>
+
+
+    <body>
+        <script>
+            function generateStory()
+            {
+           var name = document.getElementById("idTxtName").value;
+           var food1 = document.getElementById("idTxtFood1").value;
+           var food2 = document.getElementById("idTxtFood2").value;
+
+           var output= "<wonky>" + name + "</wonky> loves " + food1;
+           output += "! But " + name + " doesn't like ";
+           output += food2 + " as much.";
+
+           document.getElementById("idDivOutput").innerHTML = output;
+        
+            }
+            
+        </script>
+
+        <input type="text" id="idTxtName">
+        <br><br>
+        <input type="text" id="idTxtFood1">
+
+        <input type="text" id="idTxtFood2">
+        <br><br>
+
+
+  
+
+  
+        <div id="idDivOutput"></div>
+        <br><br>
+
+        <input type="button" id="idBtnGenStory" value="Generate Story!" onclick="generateStory()">
+        <br><br>
+
+    </body>
+</html>

@@ -1,0 +1,221 @@
+
+<html>
+<head>
+
+	<style>
+		canvas{
+			background: #dddddd;
+		}
+	</style>
+
+	<script>
+		// Canvas context; used to call Canvas methods
+		var c;
+
+		// Canvas width and height.
+		var cWidth, cHeight;
+
+		// Stores the current keyboard state
+		var curkeys = [];
+		
+		// Stores keys that have been newly pressed since last update
+		var newkeys = [];
+
+		//global variables for my image
+		var rectImg = new Image();
+		rectImg.src = "Ambush2.jpeg";
+		var rectX = 100;
+		var rectY = 200;
+		var rectWidth = 100;
+		var rectHeight = 100;
+		var rectSpeed = 15;
+
+		//This allows this to NOT MOVE
+		var bPicHorMove = false;
+
+		var bPicBounce = false;
+
+		// Initializes entire game framework. This method should only be called
+		// once, by the body onload event handler.
+		function gameFrameworkInit(){		
+			// Initialize key arrays
+			for (i = 0; i < 256; i++){
+				curkeys[i] = false;
+				newkeys[i] = false;
+			}
+		
+			// Initialize global variables for canvas
+			c = myCanvas.getContext('2d');
+			cWidth = myCanvas.width;
+			cHeight = myCanvas.height;
+
+
+			// Start listeners for getting keyboard state
+	        window.addEventListener('keydown',
+	        						 function(e){
+										if (!curkeys[e.keyCode]){
+											curkeys[e.keyCode] = true;
+											newkeys[e.keyCode] = true;
+										}
+									 }
+	        					   );
+	        
+	        window.addEventListener('keyup',
+	        						 function(e){ curkeys[e.keyCode] = false; }
+	        					   );
+
+			// Schedule the update function to be called right before the next repaint.
+			// (At the end of the update function, it will schedule itself to be called
+			// again before the NEXT repaint, and so on.
+			window.requestAnimationFrame(gameUpdate);
+		}
+
+
+
+
+		function gameUpdate()
+        {
+			//
+            //  ADD YOUR GAME UPDATE CODE HERE
+            //
+			if(curkeys[37])
+        {
+            rectX -= rectSpeed       //moves left(subtract)
+            console.log("left")
+        }
+        if(curkeys[39])
+        {
+            rectX += rectSpeed       //moves right (add)
+            console.log("right")
+        }
+        if(curkeys[38])
+        {
+            rectY -= rectSpeed       //moves up(subtract)
+            console.log("up")
+        }
+        if(curkeys[40])
+        {
+            rectY += rectSpeed       //moves down(add)
+            console.log("down")
+        }
+		//if the user clicks the h key, the boolean variable becomes true
+		if(curkeys[72])//h key
+		{
+			bPicHorMove=true;
+		}
+		//if the user clicks the s key, the boolean variable becomes false
+		if(curkeys[83])//s key
+		{
+			bPicHorMove=false;
+		}
+		//if the boolean variable for horizontal movement is true,
+		//the image continuously moves to the right 1 pixel
+		if(bPicHorMove == true)
+		{
+			rectX += rectSpeed;
+		}
+		//These four if statements are the warping task.
+		if(rectX > 800) 
+		{
+			rectX = 0
+		}
+		if(rectY > 600)
+		{
+			rectY = 0
+		}
+		if(rectX < 0)
+		{
+			rectX = 800
+		}
+		if(rectY < 0)
+		{
+			rectY = 600
+		}
+		//warping tasks end here
+		
+		//This enables the picture to bounce.
+		if(curkeys[66])//b key
+		{
+			bPicBounce = true;
+			console.log(bPicBounce)
+		}
+		//Disables the bounce.
+		if(curkeys[87])//w key
+		{
+			bPicBounce = false;
+			console.log(bPicBounce)
+		}
+		if(bPicBounce == true)
+		{//If the right side of the image hits the right of the canvas
+			//The image will move to the left
+			if(rectX + rectWidth >= cWidth)
+			{
+				//start moving the image to the left
+				rectSpeed = -rectSpeed;
+			}
+
+			//if the left side of the image 
+			if(rectX <= 0 )
+			{
+				rectSpeed = -rectSpeed;
+			}
+			if(rectY + rectHeight >= cHeight)
+			{
+				//start moving the image to the left
+				rectSpeed = -rectSpeed;
+			}
+
+			//if the left side of the image 
+			if(rectY <= 0 )
+			{
+				rectSpeed = -rectSpeed;
+			}
+		}
+	
+
+
+
+
+			
+			// ******DO NOT ADD OR MODIFY ANY CODE BELOW HERE******
+
+			// Reset newkeys
+			for (i = 0; i < 256; i++){
+				newkeys[i] = false;
+			}
+
+			// At the end of the update function, repaint the screen
+			gameDraw();
+				
+			// Last thing the update function does is to schedule itself to be called
+			// again before the next repaint
+			window.requestAnimationFrame(gameUpdate);
+		}
+
+
+		function gameDraw(){
+			// Clear the canvas before we draw the current frame
+			c.clearRect(0,0,cWidth,cHeight);
+
+            //
+            //  ADD YOUR DRAW CODE HERE
+            //
+			c.drawImage(rectImg, rectX, rectY, rectWidth, rectHeight)
+
+
+		}
+
+
+	</script>
+
+</head>
+
+
+<body onload="gameFrameworkInit()">
+	
+	<canvas id="myCanvas" width="800" height="600"></canvas>
+
+</body>
+
+
+</html>

@@ -1,0 +1,47 @@
+body{
+    color: black;
+    background-image: url(clouds.jpeg);
+    font-family: Comic Sans MS;
+    font-size: 25px;
+    text-align: center;
+}
+
+.base{
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 100px;
+    font-family: Stencil;
+}
+
+.layer1{
+    color: goldenrod;
+    font-weight: bold;
+    font-size: 65px;
+    font-family: Lucida Handwriting;
+}
+
+.layer2{
+    color: black;
+    margin-top: 50px;
+    font-weight: 300px;
+    font-size: 40px;
+    font-family: Arial;
+}
+
+p{
+    text-indent: 100px;
+    font-size: 25px;
+    background-color: yellow;
+    line-height: 40px;
+}
+
+h1{
+    color: darkgreen;
+    border-color: lightblue;
+    border-style: groove;
+    border-width: thick;
+    text-align: center;
+    font-family: Rockwell;
+    font-size: 40px;
+}

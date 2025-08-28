@@ -1,0 +1,223 @@
+
+<html>
+<head>
+
+	<style>
+		canvas{
+			background: #dddddd;
+		}
+	</style>
+
+	<script>
+		// Canvas context; used to call Canvas methods
+		var c;
+
+		// Canvas width and height.
+		var cWidth, cHeight;
+
+		// Stores the current keyboard state
+		var curkeys = [];
+		
+		// Stores keys that have been newly pressed since last update
+		var newkeys = [];
+
+
+		function getRndInt(min, max) 
+		{
+  		return Math.floor(Math.random() * (max - min) ) + min;
+		}
+
+		class RectClass
+		{
+			constructor(RectX, RectY, RectWidth, RectHeight)
+			{
+				this.x = RectX;
+                this.y = RectY;
+                this.Width = RectWidth;
+				this.Height = RectHeight;
+
+				//controls the color we will make our
+				//rectangle and text
+				this.color = "rgb(255, 0, 0)";
+
+				//This var keeps track of how many times the update() method
+				this.numUpdate = 0
+			}
+			Update() //Updates the rectangle
+			{
+				//Random integer between 20 and 100 for x
+					this.x = getRndInt(20,100);
+				//Random integer between 20 and 100 for y
+					this.y = getRndInt(20,100);
+				//Random integer between 200 and 500 for width
+					this.Width = getRndInt(200,500);
+				//Random integer between 50 and 200 for height
+					this.Height = getRndInt(50,200);
+  				
+
+				//three numbers here, for RGB color
+				var red = getRndInt(0,255)
+				var green = getRndInt(0,255)
+				var blue = getRndInt(0,255)
+				this.color = "rgb("+ red +"," + green + ", " + blue +")";
+  			
+				//add one to the number of updates
+				this.numUpdate++;
+
+
+			}
+			draw()//Allows this to draw a different rectangle or quad
+			{	
+				//generate a random color for us to use for the
+				//rectangle and text on the canvas
+				c.fillStyle = this.color;
+				//The way to make the rectangle 
+				c.fillRect(this.x, this.y, this.Width, this.Height)	
+				
+				c.fillStyle="#FF0000";
+
+				c.font = "24px Arial";
+
+				c.fillText("X: " + this.x, 650, 30);
+				c.fillText("Y: " + this.y, 650, 50);
+				c.fillText("width: " + this.Width, 650, 75);
+				c.fillText("Height: " + this.Height, 650, 100);
+				c.fillText("Updates: " + this.numUpdate, 600, 120);
+			}
+			moveLeft()
+			{
+				this.x-= 10;
+			}
+			moveUp()
+			{
+				this.y-= 10;
+			}
+			moveDown()
+			{
+				this.y+= 10;
+			}
+			moveRight()
+			{
+				this.x+= 10;
+			}
+
+		}
+
+		var Rect1 = new RectClass(50, 50, 100, 100)
+		// Initializes entire game framework. This method should only be called
+		// once, by the body onload event handler.
+		function gameFrameworkInit(){		
+			// Initialize key arrays
+			for (i = 0; i < 256; i++){
+				curkeys[i] = false;
+				newkeys[i] = false;
+			}
+		
+			// Initialize global variables for canvas
+			c = myCanvas.getContext('2d');
+			cWidth = myCanvas.width;
+			cHeight = myCanvas.height;
+			
+			// Start listeners for getting keyboard state
+	        window.addEventListener('keydown',
+	        						 function(e){
+										if (!curkeys[e.keyCode]){
+											curkeys[e.keyCode] = true;
+											newkeys[e.keyCode] = true;
+										}
+									 }
+	        					   );
+	        
+	        window.addEventListener('keyup',
+	        						 function(e){ curkeys[e.keyCode] = false; }
+	        					   );
+
+			// Schedule the update function to be called right before the next repaint.
+			// (At the end of the update function, it will schedule itself to be called
+			// again before the NEXT repaint, and so on.
+			window.requestAnimationFrame(gameUpdate);
+		}
+
+
+
+
+		function gameUpdate()
+        {
+			//
+            //  ADD YOUR GAME UPDATE CODE HERE
+            //
+			if(curkeys[37]) //left arrow
+			{
+				Rect1.moveLeft();
+			}
+			if(curkeys[39]) //right arrow
+			{
+				Rect1.moveRight()      //moves right (add)
+				
+			}
+			if(curkeys[38]) //up arrow
+			{
+				Rect1.moveUp()     //moves up(subtract)
+				
+			}
+			if(curkeys[40])//down arrow
+			{
+				Rect1.moveDown()       //moves down(add)
+			}
+			if(curkeys[82])	//Allows for different variants
+			{
+				Rect1.Update()
+
+			}
+
+			//If the user pushes the r key, we will tell the
+			//rectangle to update itself
+			if(curkeys[82])
+			{
+
+			}
+
+			
+			// ******DO NOT ADD OR MODIFY ANY CODE BELOW HERE******
+
+			// Reset newkeys
+			for (i = 0; i < 256; i++){
+				newkeys[i] = false;
+			}
+
+			// At the end of the update function, repaint the screen
+			gameDraw();
+				
+			// Last thing the update function does is to schedule itself to be called
+			// again before the next repaint
+			window.requestAnimationFrame(gameUpdate);
+		}
+
+
+		function gameDraw(){
+			// Clear the canvas before we draw the current frame
+			c.clearRect(0,0,cWidth,cHeight);
+
+            //
+            //  ADD YOUR DRAW CODE HERE
+            //
+			Rect1.draw()
+
+
+		
+		}
+
+
+	</script>
+
+</head>
+
+
+<body onload="gameFrameworkInit()">
+	
+	<canvas id="myCanvas" width="800" height="600"></canvas>
+
+</body>
+
+
+</html>

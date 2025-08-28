@@ -1,0 +1,101 @@
+<html>
+        <head>
+                <title>Input and Output</title>
+
+            <style>
+                
+            </style>
+
+            </head>
+
+
+    <script>
+        function displayText()
+        {
+            var output = document.getElementById("idTxtInput").value + "<br>";
+           
+           output += document.getElementById("idTxtArea").value;
+           
+            document.getElementById("idDivOutput").innerHTML = output;
+            
+
+            
+
+            
+
+
+
+        }
+
+
+        // This function will put a message in our text area using the
+        // Text from the text box in qoutes when the user clicks the
+        //task2 button
+        function updateTxtArea()
+        {
+           var textBox = document.getElementById("idTxtInput").value;
+
+           
+        //create a variable to remember out output string that we
+        //wish to put into our text area
+        var output = "this is what you entered: ";
+        output += "\"" + textBox + "\"";
+        output += " anything else you want to add?";
+        
+        //put the message into the textarea
+            document.getElementById("idTxtArea").value = output;
+        
+        
+        
+        }
+
+        function Backgroundcolorchange()
+        {
+            var color = document.getElementById("idSlctColor").value;
+             
+            document.getElementById("idTxtArea").style.backgroundColor = color;
+        }
+        //open the new window with the text in the 
+        //text area on it when the user clicks the task4
+        function opennewwindow()
+        {
+            var output = "<html>";
+            output += "<head></head>";
+            output += "<body>" + document.getElementById("idTxtArea").value + "</body>";
+            output += "</html>";
+
+            //save new window
+        }
+
+
+
+
+    </script>
+<body>
+    <form name = "InputOutputForm">
+    <input type = "text" id = "idTxtInput">
+    <br><br>
+    
+    <textarea rows="4" cols = "50" id="idTxtArea"></textarea>
+    <br><br>
+
+    <select id = "idSlctColor">
+        <option>Red</option>
+        <option>Green</option>
+        <option>Blue</option>
+    </select>
+    <br><br>
+
+    <input type="button" id="idBtnTask1" value="Task1" onclick="displayText()">
+    <input type="button" id="idBtnTask2" value="Task2" onclick="updateTxtArea()">
+    <input type="button" id="idBtnTask3" value="Task3" onclick = "Backgroundcolorchange()">
+    <input type="button" id="idBtnTask4" value="Task4" onclick = "opennewwindow()">
+
+    <div id="idDivOutput"></div>
+
+</form>
+
+</body>
+
+
+</html>

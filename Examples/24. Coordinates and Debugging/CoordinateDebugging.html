@@ -1,0 +1,200 @@
+
+<html>
+<head>
+
+	<style>
+		canvas{
+			background: #dddddd;
+		}
+	</style>
+
+	<script>
+		//Keep track of the direction our rectangle is moving
+		//Can be one of: "up", "down", "left", "right", or ""
+		//(Empty string means that the rectangle is currently not moving)
+		var rectDirection = "";
+		var rectImg = new Image();
+		rectImg.src = "Borzoi.jpeg";
+		var rectX = 100;
+		var rectY = 200;
+		var rectWidth = 100;
+		var rectHeight = 100;
+		var rectSpeed = 15;
+		// Canvas context; used to call Canvas methods
+		var c;
+
+		// Canvas width and height.
+		var cWidth, cHeight;
+
+		// Stores the current keyboard state
+		var curkeys = [];
+		
+		// Stores keys that have been newly pressed since last update
+		var newkeys = [];
+
+		// Initializes entire game framework. This method should only be called
+		// once, by the body onload event handler.
+		function gameFrameworkInit(){		
+			// Initialize key arrays
+			for (i = 0; i < 256; i++){
+				curkeys[i] = false;
+				newkeys[i] = false;
+			}
+			// Initialize global variables for canvas
+			c = myCanvas.getContext('2d');
+			cWidth = myCanvas.width;
+			cHeight = myCanvas.height;
+
+			// Start listeners for getting keyboard state
+	        window.addEventListener('keydown',
+	        						 function(e){
+										if (!curkeys[e.keyCode]){
+											curkeys[e.keyCode] = true;
+											newkeys[e.keyCode] = true;
+										}
+									 }
+	        					   );
+	        
+	        window.addEventListener('keyup',
+	        						 function(e){ curkeys[e.keyCode] = false; }
+	        					   );
+
+			// Schedule the update function to be called right before the next repaint.
+			// (At the end of the update function, it will schedule itself to be called
+			// again before the NEXT repaint, and so on.
+			window.requestAnimationFrame(gameUpdate);
+		}
+		function gameUpdate()
+        {
+			//
+            //  ADD YOUR GAME UPDATE CODE HERE
+        
+			//Basic movement 
+		if(curkeys[37])
+        {
+			rectDirection = "left";
+            rectX -= rectSpeed       //moves left(subtract)
+            console.log("left");
+        }
+        if(curkeys[39])
+        {
+			rectDirection = "right";
+            rectX += rectSpeed       //moves right (add)
+            console.log("right")
+        }
+        if(curkeys[38])
+        {
+			rectDirection = "up";
+            rectY -= rectSpeed       //moves up(subtract)
+            console.log("up")
+        }
+        if(curkeys[40])
+        {
+			rectDirection = "down";
+            rectY += rectSpeed       //moves down(add)
+            console.log("down")
+		}
+		if(curkeys[32])				//space
+		{
+			rectDirection = "";
+		}
+		if(rectDirection == "left") //Moves left (Subtract)
+		{
+			rectX -= rectSpeed;
+		}
+		if(rectDirection == "right") //Moves right (Add)
+		{
+			rectX += rectSpeed
+		}
+		if(rectDirection == "up") //Moves up (Subtract)
+		{
+			rectY -= rectSpeed
+		}
+		if(rectDirection == "down") //Moves down (Add)
+		{
+			rectY += rectSpeed
+		}
+		if(curkeys[88])
+		{
+			rectDirection = "";
+		}
+		//Basic movements ends here
+		//Wrap logic for our game
+		//If the left side of our image off right side
+		//of the canvas, it will reappear on the left side of the
+		//canvas, slowly coming back
+		if(rectX > cWidth)
+		{
+			rectX = -rectWidth
+		}
+		//If the right side of our image off left side
+		//of the canvas, it will reappear on the right side of the
+		//canvas, slowly coming back
+		if(rectX + rectWidth < 0)
+		{
+			rectX = cWidth;
+		}
+		//If the bottom side of our image off top side
+		//of the canvas, it will reappear on the bottom side of the
+		//canvas, slowly coming back
+		if(rectY + rectHeight < 0)
+		{
+			rectY = cHeight;
+		}
+		//If the top side of our image off bottom side
+		//of the canvas, it will reappear on the top side of the
+		//canvas, slowly coming back
+		if(rectY > cHeight)
+		{
+			rectY = -rectHeight;
+		}
+
+			// ******DO NOT ADD OR MODIFY ANY CODE BELOW HERE******
+
+			// Reset newkeys
+			for (i = 0; i < 256; i++){
+				newkeys[i] = false;
+			}
+
+			// At the end of the update function, repaint the screen
+			gameDraw();
+				
+			// Last thing the update function does is to schedule itself to be called
+			// again before the next repaint
+			window.requestAnimationFrame(gameUpdate);
+		}
+
+
+		function gameDraw(){
+			// Clear the canvas before we draw the current frame
+			c.clearRect(0,0,cWidth,cHeight);
+
+            //
+            //  ADD YOUR DRAW CODE HERE
+            //
+			c.drawImage(rectImg, rectX, rectY, rectWidth, rectHeight)
+			//IMAGES USES TOP LEFT
+			//TEXT USES BOTTOM LEFT
+
+			//Set the font size and style
+			c.font = "24px Arial";
+			//Put our x and y coordinate on the top right
+			//of our canvas for us to view
+		    c.fillText("X: " + rectX, 700, 30);
+			c.fillText("Y: " + rectY, 700, 50);
+		}
+
+
+	</script>
+
+</head>
+	
+
+<body onload="gameFrameworkInit()">
+	
+	<canvas id="myCanvas" width="800" height="600"></canvas>
+
+</body>
+
+
+</html>

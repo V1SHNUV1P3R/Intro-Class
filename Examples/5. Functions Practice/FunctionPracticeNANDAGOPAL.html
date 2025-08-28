@@ -1,0 +1,83 @@
+<html>
+        <head>
+                <title> Balling </title>
+
+               <script>
+                  function showSummary(frmInfo)
+                {
+                   
+               
+                
+                    var message = getFavNumberComment(document.getElementById("idTxtFavNumber").value);
+
+                    //add the favorite animal comment to the message
+                    message += getFavAnimalComment(document.getElementById("idSlctFavAnimal").value);
+
+
+                    alert(message);
+                }
+               //return a comment (string) that is one of the following:
+                // "favorite number is positive"
+                // "favorite number is negative"
+                // "favorite number is zero"
+                
+                
+                    function getFavNumberComment(num)
+
+
+
+
+                    
+                    {
+                        if (num == 0){
+                    return("number is zero");
+                }
+                else if (num > 0){
+                    return("number is positive");
+                }
+                
+                 else
+                 {
+                return ("number is negative");
+                }
+            }
+            
+            
+            function getFavAnimalComment(animal)
+            {
+                if(animal == "Cat")
+                {
+                    return " your a person with a cat ";
+                }
+                else if(animal == "Dog")
+                {
+                    return " you are a person with a dog ";
+                }
+                else
+                {
+                    return " your a person with a rabbit ";
+                }
+             }
+            
+            
+
+
+
+
+                </script>
+
+        </head>
+        <body>
+            <form name="frmInfo">
+                <input type=text id="idTxtFavNumber">
+                <select id = "idSlctFavAnimal">
+                <option>Cat</option>
+                <option>Dog</option>
+                <option>Rabbit</option>
+            </select>
+            <br><br>
+        </form>
+
+        <input type=button id="idBtnDone" value="done" onClick="showSummary(frmInfo)">
+         </body>
+</html>

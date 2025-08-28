@@ -1,0 +1,118 @@
+<html>
+<head>
+    <style>
+        canvas
+        {
+            background: #dddddd;
+        }
+    </style>
+<script>
+    //Canvas context; used to call Canvas methods
+    var c;
+
+    //The X position
+    var rectXPos = 100
+    //The Y position
+    var rectYPos = 150
+    //The width
+    var rectWidth = 100
+    //the height
+    var rectHeight = 100
+    //The speed of moment
+    var rectSpeed = 3
+
+
+    //Canvas width and height
+    var cWidth, cHeight;
+
+    //Stores the current keyboard
+    var curkeys = [];
+
+    //Initializes entire game framework. This method should only be called
+    //once, by the body onload event handler.
+    function gameFrameworkInit()
+    {//Initialize global variables for canvas
+    c = myCanvas.getContext('2d') 
+    cWidth = myCanvas.width;
+    cHeight = myCanvas.height;
+
+    //Start listeners for getting keyboard state
+    window.addEventListener('keydown',
+                            function(e){curkeys[e.keyCode] = true; }
+                                );
+
+    window.addEventListener('keyup',
+                            function(e){curkeys[e.keyCode] = false; }
+                            );
+        //Schedule the update function to be called right before the next repaint.
+        //(At the end of the update function, it will schedule itself to be called
+        //again before the NEXT repaint, and so on)
+        window.requestAnimationFrame(gameUpdate);
+    }
+    function gameUpdate()
+    {
+        
+
+
+        //Detects left arrow key press and updates rectangle's
+        //x coordinate position
+        if(curkeys[37])
+        {
+            rectXPos -= rectSpeed       //moves left(subtract)
+            console.log("left")
+        }
+        if(curkeys[39])
+        {
+            rectXPos += rectSpeed       //moves right (add)
+            console.log("right")
+        }
+        if(curkeys[38])
+        {
+            rectYPos -= rectSpeed       //moves up(subtract)
+            console.log("up")
+        }
+        if(curkeys[40])
+        {
+            rectYPos += rectSpeed       //moves down(add)
+            console.log("down")
+        }
+    
+        
+        //******************************************
+        //DONT ADD ANYTHING BELOW THIS LINE OF CODE
+        //******************************************
+        //AT THE END of the update function, repaint the screen
+        gameDraw();
+
+        //Last thing the update function does is to schedule itself to be called
+        //again before the next repaint
+        window.requestAnimationFrame(gameUpdate);
+    }
+    function gameDraw()
+    {
+        //Before we draw anything, we must first clear
+        //the canvas. After that, we'll draw the current frame
+        c.clearRect(0,0,cWidth,cHeight);
+        //******************************************
+        //DONT ADD ANYTHING ABOVE THIS LINE OF CODE
+        //******************************************
+        //The rectangle
+        c.fillStyle = "#FF0000";
+  
+        c.fillRect(rectXPos, rectYPos, rectWidth, rectHeight);
+
+        //ADD ALL OF YOUR CANVAS DRAW STATEMENTS HERE
+        //
+    }
+</script>
+
+</head>
+
+<body onload="gameFrameworkInit()">
+
+    <canvas id="myCanvas" width="800" height="600"></canvas>
+
+   
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <title>Lucas gaming</title>
+
+      
+
+    </head>
+  
+  
+    <style></style>
+  
+  
+  <body>
+        <script>
+            function checkZipCode()
+            {
+              var zipcode = idTxtZipCode.value;
+
+              if(zipcode.length == 5)
+                {
+                    alert("Thank you for entering your zip code!")
+    
+                    document.body.style.backgroundColor = "green";
+                }
+                 else if(zipcode.length == 0)
+                {
+                    alert("Input a number")
+                }
+                else if(zipcode.length > 5)
+                {
+                    alert("You entered too much digits")
+
+                    document.body.style.backgroundColor = "red";
+                }
+                else if(zipcode.length < 5)
+                {
+                    alert("You entered too little digits")
+
+                    document.body.style.backgroundColor = "orange"; 
+
+                }
+               
+                
+    
+            }
+
+
+
+
+
+
+        </script>
+
+
+
+
+  
+  
+  Zip code: <input type=text id="idTxtZipCode">
+            <br><br>
+        <input type=button value="Check Zip code" onclick="checkZipCode()">
+
+
+
+  
+  
+  
+  
+  
+  
+  
+    </body>
+
+
+
+
+
+</html>

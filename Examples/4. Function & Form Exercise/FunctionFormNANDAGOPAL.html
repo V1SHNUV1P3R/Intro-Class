@@ -1,0 +1,152 @@
+<html>
+    <head>
+        <title>Function & Form Example</title>
+        <style type=text/css>
+            body{
+                background-color: pink;
+                color: navy;
+                font-family: Rockwell;
+            }
+                    
+            #idDivMessage
+            {
+                color: blue;
+                font-size: 20px;
+            }
+        </style>
+        <script>
+                
+            //the input (numHours) is the number of hours of sleep you get
+            //based on the input, helper function returns a comment (string) about how much sleep you get
+
+            function getSleepComment(numHours)
+            {
+                if (numHours < 7){
+                    return "You need more sleep!"
+                }
+                else if (numHours < 9){
+                    return "you get the right amount of sleep"
+                }
+                else{
+                    return "you get too much sleep"
+                }
+            
+            }
+
+            //Returns a comment (string) about the snack input
+            function getFavSnackMessage()
+            {
+                //code here
+                //if user chose doritos
+                if(snack = "Doritos");
+                    {
+                        //return a message you choose Doritos
+                        return "Doritos are basic but k";
+                    }
+                    if(snack = "Cheetos");
+                    {
+                        //return a message you choose Doritos
+                        return "Cheetos are only good if hot cheetos";
+                    }
+
+
+
+
+
+            }
+
+
+
+
+
+            function checkInfo(inputForm)
+            {
+                var displayText = "";
+
+                if(inputForm.idTxtName.value.length < 1)
+                {
+                    alert("please fill your name");
+
+
+                    document.getElementById("idTxtName").focus();
+                    return;
+
+                }
+
+                // if they forgot to choose a snack
+                if(document.getElementById("idSlctFavSnack").value == "Choose your snack")
+                {
+                    //alert a message
+                    alert("Please choose a snack or else");
+
+
+
+                    //stop running the function
+                    return;
+                }
+
+
+
+               var name= inputForm.idTxtName.value;
+                displayText = displayText + "Name: " + name  + "<br>";
+
+                var bedtime = document.getElementById("idSlctBedTime").value;
+                displayText = displayText + "Bed time: " + bedtime  + "<br>";
+
+                var sleepAmount = eval(document.getElementById("idTxtNumSleepHours").value);
+                displayText += getSleepComment(sleepAmount) + "<br>";
+
+                //Add the comment aout the snack
+                var favSnack = document.getElementById("idSlctFavSnack").value;
+                displayText += getFavSnackMessage(favSnack);
+
+                document.getElementById("idDivMessage").innerHTML = displayText;
+                
+                
+            }
+                
+        </script>
+    </head>
+    <body>
+        <form name=frmStudentInfo>
+            Name: <input type="text" id="idTxtName">
+            <br><br>
+
+            When is your school night bedtime?
+            <select id="idSlctBedTime">
+                <option> 9:00 or earlier</option>
+                <option> 9:30   </option>
+                <option> 10:00  </option>
+                <option> 10:30 </option>
+                <option> 11:00 </option>
+                <option> 11:30 or later </option>
+            </select>
+            <br><br>
+
+            Approximately how many hours of sleep do you get on a school night?
+            <input type="text" id="idTxtNumSleepHours">
+            <br><br>
+        
+            Whats your favorite snack?
+            <select id="idSlctFavSnack">
+                <option>Choose your snack</option>
+                <option>Doritos</option>
+                <option>Cheetos</option>
+                <option>Fruit snacks</option>
+            </select>
+            <br><br>
+
+        
+        
+            <input type=button id="idBtnDone" value="I'm done" onClick="checkInfo(frmStudentInfo)">
+            <br><br>
+            
+            
+        
+            <!---How come you can't see his next di on the page anywhere?-->
+            <div name="textPlace" id="idDivMessage"></div>
+            
+        </form>
+
+    </body>
+</html>

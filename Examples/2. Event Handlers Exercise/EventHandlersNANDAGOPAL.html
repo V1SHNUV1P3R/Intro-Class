@@ -1,0 +1,132 @@
+<html>
+<head>
+
+    <title> Event Handlers Exercise</title>
+    <style type=test/css>
+        body
+        {
+            background-color:skyblue;
+            color:navy;
+            font-family: Rockwell;
+        }
+    </style>
+
+    <script>
+        // ADD ALL OF YOUR EVENT HANDLER FUNCTIONS HERE
+       
+        // This will remove the VALUE "enter Name" from the text box (idTxtName) 
+        function clearTextBox()
+        {
+            document.getElementById("idTxtName").value="";
+        }
+        //When the page loads it alerts the user
+        function loadMessage()
+        {
+            alert("HEEEEEEEEEN");
+        }
+        // when we focus on pass box (idPwID) change font to red
+        function changePwFontRed()
+        {
+           document.getElementById("idPwID").style.color = "red"
+        }
+            // when we leave on pass box (idPwID) change font to black
+        function changePwFontBlack()
+        {
+           document.getElementById("idPwID").style.color = "black"
+        }
+        function changePic()
+        {
+            document.getElementById("idImgScooby").src = "jerry.jpg";
+        }
+        function changePicBack()
+        {
+            document.getElementById("idImgScooby").src = "scooby.gif"
+        }
+         
+
+         // When we click the "im done" we will alert a message saying the form was submitted.
+        function submitMessage()
+        {
+            alert("Your form has been submitted.");
+        }
+         function alertMale(){
+         alert("You are a boy")
+         }
+
+         function alertFemale(){
+             alert("you are a girl")
+         }
+
+         function mousedown(){
+             document.getElementById("myP").style.color="cyan";
+         }
+         
+         function changeButton(){
+             document.getElementById("idBtnClick").value = "HAHAHHAHAHHAHAHAHHAHHAHAHHAHAHHAHa";
+
+         }
+
+         function textbackroundchange(){
+             document.getElementById("part6").style.backgroundColor = "cyan"
+         }
+
+         function geoalert(){
+             alert("Geo man")
+         }
+
+         function changeButtonBack()
+         {
+            document.getElementById("idBtnClick").value = "Yo nice";
+         }
+
+    </script>
+</head>
+
+<body onLoad = "loadMessage()"> 
+
+    <form onsubmit="submitMessage()">
+            Student Name:
+            <input type="text" id="idTxtName" value="Enter Name" onClick="clearTextBox()">
+            <br><br>
+
+            Student ID:
+            <input type="password" id="idPwID" onFocus = "changePwFontRed()" onBlur = "changePwFontBlack()">
+            <br><br>
+
+            Sex:
+            <input type="radio" id="idRdMale"   name="rdSex"  value="M" onclick="alertMale()"> Male
+            <input type="radio" id="idRdFemale" name="rdSex"  value="F" onclick="alertFemale()"> Female
+            <br><br>
+
+            What year are you graduating?
+            <select id="idSlctClass">
+                <option> 2020 </option>
+                <option> 2021 </option>
+                <option> 2022 </option>
+                <option> 2023 </option>
+            </select>
+            <br><br>
+
+            I like the following Math class (check all that apply):<br>
+            <input type="checkbox" id="idCkAlg" value="A">Algebra<br>
+            <input type="checkbox" id="idCkGeo" value="G" onclick = "geoalert()" >Geometry<br> 
+            <input type="checkbox" id="idCkTrig" value="T">Trigonometry<br>
+            <br><br> 
+            <textarea rows="4" cols="50" id="part6" onmousedown = "textbackroundchange()" >Anything else you'd like to add?</textarea>
+            
+            <br><br>
+
+            <input type=button id = "idBtnClick" value="Click here" onMouseover="changeButton()" onMouseout="changeButtonBack()">
+            <input type=submit value="I'm done">
+            <input type=reset value="Clear the form">
+            <br><br>
+             
+           
+            
+          <img id="idImgScooby" src="scooby.gif" width=200 onMouseover="changePic()" onMouseout="changePicBack()">
+
+            
+	
+     </form>
+    </body>
+</html>

@@ -1,0 +1,120 @@
+<html>
+    <head>
+        <title>Viraj gaming</title>
+
+
+        <style>
+
+        </style>
+
+    </head>
+
+    <body>
+        <script>
+            function displayLetterGrade()
+            {
+                var percentage = Number(idTxtAvg.value);
+                var grade;
+                var output = "Your average in the class is " + percentage;
+                output += "%, which means that your grade in the class is ";
+            
+
+                if(percentage >= 99)
+                {
+                    
+
+                    output += "A+"
+                  
+                    alert(output + "Sweaty gamer");
+                }
+                else if(percentage >= 93)
+                {
+                    output += "A"
+
+                    alert(output + "Smort");
+                }
+                else if(percentage >= 90)
+                {
+                    output += "A-"
+
+                    alert(output + "Decent");
+                }
+                else if(percentage >= 87)
+                {
+                    output += "B+"
+
+                    alert(output + "Decent");
+                }
+                else if(percentage >= 83)
+                {
+                    output += "B"
+
+                    alert(output);
+                }
+                else if(percentage <= 80)
+                {
+                    output += "B-"
+
+                    alert(output + "Okay");
+                }
+                else if(percentage <= 77)
+                {
+                    output += "C+"
+
+                    alert(output + "Average");
+                }
+                else if(percentage <= 73)
+                {
+                    output += "C"
+
+                    alert(output);
+                }
+                else if(percentage <= 70)
+                {
+                    output += "C-"
+
+                    alert(output + "uh oh");
+                }
+                else if(percentage <= 67)
+                {
+                    output += "D+"
+
+                    alert(output);
+                }
+                else if(percentage <= 60)
+                {
+                    output += "D"
+
+                    alert(output + "fard");
+                }
+                else if(percentage <= 59.9)
+                {
+                    output += "F"
+
+                    alert(output + "real?");
+                }
+            }
+
+        </script>
+
+
+
+   
+   Percentage average here:
+   <input type=text id="idTxtAvg">
+   <br><br>
+   <input type=button value="Display the grade" onclick="displayLetterGrade()">
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+    </body>
+
+
+</html>

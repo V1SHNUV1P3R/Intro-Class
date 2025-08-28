@@ -1,0 +1,421 @@
+<html>
+<head>
+
+	<style>
+		canvas{
+			background: #dddddd;
+		}
+	</style>
+
+	<script>
+
+		class platformClass
+		{
+			constructor(pfX, pfY,			// location
+						pfWidth, pfHeight,	// dimensions
+						pfImgFile)			// image file name
+			{
+				this.x = pfX;
+				this.y = pfY;
+				this.width = pfWidth;
+				this.height = pfHeight;
+
+				this.img = new Image();
+				this.img.src = "platform.png";
+
+			}
+
+			// Draw this platform on the screen
+			draw()
+			{
+				c.drawImage(this.img, this.x, this.y, this.width, this.height);
+			}
+
+		}
+
+		class birdClass
+		{
+			constructor()
+			{
+				// CONSTRUCTOR CODE
+				this.x = 50;
+				this.y = 410;
+				this.width = 100;
+				this.height = 100;
+
+				this.img = new Image();
+				this.img.src = "bird.png";
+
+				this.bInAir = false;
+				this.curYspeed = 0;	
+			}
+			// Initiate the a jump for this bird
+			jump()
+			{
+				// Can initiate jump only if bird is currently on the ground
+				if (this.bInAir == false){
+					this.bInAir = true;
+					this.curYspeed = -20;
+				}
+			}
+			// This updates the bird's current location & speed (e.g. if it's falling in the air)
+			// (Must be called in the main gameUpdate method)
+			update()
+			{
+				// If the bird is currently in the air (i.e. mid-jump), then update its
+				// location and current vertical speed
+				if(this.bInAir == true)
+				{
+					this.y += this.curYspeed;
+					this.curYspeed++;
+
+					// Check if we landed on the ground
+					if (this.y > 410){
+						this.y = 410;
+						this.bInAir = false;
+					}
+				
+					if(this.intersects(platform1) && this.curYspeed > 0)
+					{
+						this.curYspeed = 0;
+
+						this.y = platform1.y - this.height + 2;
+
+						this.bInAir = false;
+					} 
+					if(this.intersects(platform2) && this.curYspeed > 0)
+					{
+						this.curYspeed = 0;
+
+						this.y = platform2.y - this.height + 2;
+
+						this.bInAir = false;
+					} 
+				}
+				else
+				{
+					if(this.y < 410 && 
+					this.intersects(platform1) == false &&
+					this.intersects(platform2) == false)
+					{
+						this.bInAir = true
+					}
+				}
+					
+			}
+			// Returns true if this bird intersects with "obj"; returns false otherwise
+			intersects(obj)
+			{
+				if (this.x < obj.x + obj.width &&
+					this.x + this.width > obj.x &&
+					this.y < obj.y + obj.height &&
+					this.y + this.height > obj.y)
+				{
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+			Right()
+			{
+				//If the right side of the bread is less than the
+				//width of the canvas - 5.(Unable to leave canvas.)
+				if(this.x + this.width < cWidth-5)
+				{
+					//Move the bread object right by 5 pixels.
+					this.x += 10;
+				}
+			}
+			Left()
+			{
+
+				//If the left side of the bread is greater than the
+				//left side of the canvas
+				if(this.x > 5)
+				{
+					this.x -= 10;
+				}
+			}
+			// Draw this bird on the screen
+			draw()
+			{
+				c.drawImage(this.img, this.x, this.y, this.width, this.height);
+			}
+		}
+			class pebbleClass
+			{
+
+				constructor(pebbleX, pebbleY)
+				{
+					// CONSTRUCTOR CODE
+					this.x = pebbleX;
+					this.y = pebbleY;
+					this.width = 30;
+					this.height = 30;
+					this.img = new Image();
+					this.img.src = "pebble.png";
+					this.bVisible = false;
+				}
+
+
+				// If this pebble is visible, then move it to the right.
+				// If the pebble goes off the screen, mark it invisible.
+				update()
+				{
+					if (this.bVisible == true)
+					{
+						this.x += 12;
+						if (this.x > 800)
+						{
+							this.bVisible = false;
+						}
+					}
+					if(this.intersects(pig))
+					{
+						pig.bVisible = false
+
+						
+					}
+				}
+				intersects(obj)
+				{
+					if (this.x < obj.x + obj.width &&
+						this.x + this.width > obj.x &&
+						this.y < obj.y + obj.height &&
+						this.y + this.height > obj.y)
+					{
+						return true;
+					}
+					else{
+						return false;
+					}
+				}
+
+				// If this pebble is visible, then draw it on the screen.
+				draw()
+				{
+					if (this.bVisible == true)
+					{
+						c.drawImage(this.img, this.x, this.y, this.width, this.height);	
+					}
+				}
+			}
+
+			class pigClass
+			{
+				constructor(pX, pY,			// location
+							pWidth, pHeight)	// dimensions
+				{
+					this.x = pX;
+					this.y = pY;
+					this.width = pWidth;
+					this.height = pHeight;
+
+					this.img = new Image();
+					this.img.src = "pig.png";
+
+					this.bVisible = true;
+				}
+				Update()
+				{
+				}
+				intersects(obj)
+				{
+					if (this.x < obj.x + obj.width &&
+						this.x + this.width > obj.x &&
+						this.y < obj.y + obj.height &&
+						this.y + this.height > obj.y)
+					{
+						return true;
+					}
+					else{
+						return false;
+					}
+				}
+				// Draw this platform on the screen
+				draw()
+				{
+					if(this.bVisible)
+					{
+						c.drawImage(this.img, this.x, this.y, this.width, this.height);
+					}
+					
+				}
+
+			}
+
+		var pebbleArray = [];
+
+		//create a variable to remember the index
+		//in the pebble aray that we are currently at
+		var pebbleIndex = 0;
+
+		var bird = new birdClass();
+		var platform1 = new platformClass(200, 300, 200, 20);
+		var platform2 = new platformClass(400, 100, 200, 20);
+		var pig = new pigClass(500, 0, 100, 100)
+
+		for(i=0; i<100; i++)
+		{
+			pebbleArray[i] = new pebbleClass(0,0);
+		}
+	
+		// Canvas context; used to call Canvas methods
+		var c;
+
+		// Canvas width and height.
+		var cWidth, cHeight;
+
+		// Stores the current keyboard state
+		var curkeys = [];
+		
+		// Stores keys that have been newly pressed since last update
+		var newkeys = [];
+
+		// Initializes entire game framework. This method should only be called
+		// once, by the body onload event handler.
+		function gameFrameworkInit(){		
+			// Initialize key arrays
+			for (i = 0; i < 256; i++){
+				curkeys[i] = false;
+				newkeys[i] = false;
+			}
+		
+			// Initialize global variables for canvas
+			c = myCanvas.getContext('2d');
+			cWidth = myCanvas.width;
+			cHeight = myCanvas.height;
+
+
+			// Start listeners for getting keyboard state
+	        window.addEventListener('keydown',
+	        						 function(e){
+										if (!curkeys[e.keyCode]){
+											curkeys[e.keyCode] = true;
+											newkeys[e.keyCode] = true;
+										}
+									 }
+	        					   );
+	        
+	        window.addEventListener('keyup',
+	        						 function(e){ curkeys[e.keyCode] = false; }
+	        					   );
+
+			// Schedule the update function to be called right before the next repaint.
+			// (At the end of the update function, it will schedule itself to be called
+			// again before the NEXT repaint, and so on.
+			window.requestAnimationFrame(gameUpdate);
+		}
+
+
+
+
+		function gameUpdate()
+		{
+			if (curkeys[32])
+			{		// SPACE
+				bird.jump();
+			}
+			if(curkeys[37])		//left arrow key
+			{
+				bird.Left();
+			}
+			if(curkeys[39])		//right arrow key
+			{
+				bird.Right();
+			}
+			if(newkeys[70]) //F key
+			{
+				for(var i=0; i<100; i++)
+				{
+					//only allow pebbles to be thrown if they aren't already visible
+					if(pebbleArray[pebbleIndex].bVisible == false)
+					{
+						pebbleArray[pebbleIndex].x = bird.x + 90;
+						pebbleArray[pebbleIndex].y = bird.y + 50;
+
+						pebbleArray[pebbleIndex].bVisible = true;
+
+						
+					}
+					
+				}
+				pebbleIndex++
+
+				if(pebbleIndex == 99)
+				{
+					pebbleIndex = 0
+				}
+			}
+			
+
+
+
+			// Update bird
+			bird.update();
+			pig.Update();
+			
+			for(var i=0; i < 100; i++)
+			{
+				pebbleArray[i].update()
+			}
+
+			
+
+			// DO NOT ADD OR MODIFY ANY CODE BELOW HERE
+
+
+			// Reset newkeys
+			for (i = 0; i < 256; i++){
+				newkeys[i] = false;
+			}
+
+			// At the end of the update function, repaint the screen
+			gameDraw();
+				
+			// Last thing the update function does is to schedule itself to be called
+			// again before the next repaint
+			window.requestAnimationFrame(gameUpdate);
+		}
+
+
+		function gameDraw()
+		{
+			// Clear the canvas before we draw the current frame
+			c.clearRect(0,0,cWidth,cHeight);
+
+			// Draw the background
+			var bg = new Image();
+			bg.src = "background.png";
+			c.drawImage(bg, 0, 0, 800, 600);
+
+
+			// Draw the bird
+			bird.draw();
+			//draw platform
+			platform1.draw()
+			platform2.draw()
+
+			pig.draw();
+
+			for(var i=0; i < 100; i++)
+			{
+				pebbleArray[i].draw()
+			}
+		}
+
+
+	</script>
+
+</head>
+
+
+<body onload="gameFrameworkInit()">
+	
+	<canvas id="myCanvas" width="800" height="600"></canvas>
+
+</body>
+
+
+</html>

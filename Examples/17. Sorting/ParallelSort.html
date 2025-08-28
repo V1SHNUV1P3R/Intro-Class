@@ -1,0 +1,124 @@
+<html>
+    <head>
+        <title>Parallel Sort</title>
+
+        <style></style>
+
+        <script>
+            //global variables initializing our arrays
+            var firstNameArray = ["Bob", "Dave", "Alice", "Carol"];
+            var ageArray = [17, 13, 16, 20];
+            var lastNameArray = ["Davidson", "Smith", "Brown", "Brown"];
+
+            //This function will generate an output that will be placed
+            //on the page in the div (idDivOutput) using the firstNameArray
+            //and ageArray array information
+            function displayList()
+            {
+                //create our output variable which will eventually be placed
+                //in the div at the end of the function
+                var output = "";
+
+                //we need to loop through our array and update our output
+                //string with the appropriate information
+                for(var i = 0; i <= firstNameArray.length - 1; i++)
+                {
+                    //add the desired information to the output string
+                    output += lastNameArray[i] + ", ";
+                    output += firstNameArray[i] + ", age " + ageArray[i] + "<br>";
+                }
+
+                //place the output variable in our div (idDivOutput)
+                idDivOutput.innerHTML = output;
+            }
+
+            //This function sorts inputArray (ascending) and returns the result
+            function bubblesort(inputArray)
+            {
+                //store the length of our array (for when we loop through it)
+                var arraySize = inputArray.length;
+
+                //If the given array has less than 2 elements, then it's already sorted!
+                if(arraySize < 2)
+                {
+                    //our array is in order, so we stop the function
+                    //right at this point
+                    return inputArray;
+                }
+
+                //Keep making passes through the array comparing/swapping adjacent elements
+                //We do this until we are able to make a pass through the array without
+                //having to make any swaps - since that must mean that the array is sorted
+
+                //this variable tracks whether the current pass will be the last one
+                var sortDone;
+
+                do
+                {
+                    //Assume that the array is in sorted order, until we
+                    //are proven wrong (i.e. we have to swap elements)
+                    sortDone = true;
+
+                    //loop through and check every position in the array
+                    for(var i = 0; i <= arraySize - 1; i++)
+                    {
+                        //IF  the object in the current index is BIGGER THAN
+                        //the object in the NEXT index, then we need
+                        //to swap those 2 objects.
+                        if(inputArray[i] > inputArray[i+1])
+                        {
+                            //The array was not in sorted order, so we must
+                            //keep making passes through the array
+                            sortDone = false;
+
+                            //Swap the two out-of-order elements
+                            var temp = firstNameArray[i];
+                            firstNameArray[i] = firstNameArray[i+1];
+                            firstNameArray[i+1] = temp;
+                            //The thing above except for the ages.
+                            var temp = ageArray[i];
+                            ageArray[i] = ageArray[i+1];
+                            ageArray[i+1] = temp;
+                            //the thing above except for last names
+                            var temp = lastNameArray[i];
+                            lastNameArray[i] = lastNameArray[i+1];
+                            lastNameArray[i+1] = temp;
+                        }
+                    }
+                } while(sortDone == false)
+
+                //At this point, since we broke out of the while loop, it must
+                //mean that the array is sorted
+                return inputArray;
+            }
+
+            //This function will display our array in alphabetical order
+            //when the "Show Alphabetically (a-z)" button in clicked
+            function displayAlphabeticalList()
+            {
+                //Sort the arrays using our bubblesort() function
+                bubblesort(firstNameArray);
+
+                //Display our information in the div (idDivOutput)
+                displayList(ageArray);
+            }
+            function lastname()
+            {
+                bubblesort(lastNameArray)
+
+                displayList()
+            }
+        </script>
+    </head>
+
+    <body>
+        <input type = "button" value = "Display List" onClick = "displayList()">
+        <input type = "button" value = "Show Alphabetically (a-z)"
+        onClick = "displayAlphabeticalList()">
+
+        <input type = "button" value = "Display Last List(a-z)" onClick = "lastname()">
+        <br><br>
+
+        <div id = "idDivOutput"></div>
+    </body>
+</html>

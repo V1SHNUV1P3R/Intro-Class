@@ -1,0 +1,123 @@
+<html>
+    <head>
+        <title>Sanjay gaming</title>
+
+<script>
+        
+        var numArray = [];
+
+        function GearShift()
+        {
+            for(var i = 0; i < 10; i++)
+            {
+                var randNum = Math.floor(Math.random()*50);
+                
+            numArray.push(randNum)
+
+                var output;
+            }
+            console.log(numArray);
+
+            output = "<br>" + "Numbers" + "<br>" + "<br>" + numArray;
+
+            idDivOutput.innerHTML = output;
+        }
+
+
+        function bubblesort(inputArray)
+        {
+            
+            var arraySize = inputArray.length;
+
+            if(arraySize < 2)
+            {
+                return inputArray;
+            }
+            var sortDone;
+
+            do{
+                sortDone = true;
+
+                for(var i=0 ; i <= arraySize-1; i++)
+                {
+                    
+                    if(inputArray[i] > inputArray[i+1])
+                    {
+                        sortDone = false;
+
+                        var temp = inputArray[i];
+                        inputArray[i] = inputArray[i+1];
+                        inputArray[i+1] = temp;
+                    }
+                        
+                }
+
+            }while(sortDone == false)
+
+            var min = inputArray[0];
+
+            var max = inputArray[9];
+
+            var dif = max - min;
+
+            alert(dif)
+        }
+        
+        function Uprising()
+        {
+            var sortedArray = bubblesort(numArray);
+
+            idDivOutput.innerHTML = numArray;
+        }
+        function Downfall()
+        {
+            var arraySize = numArray.length
+
+            if(arraySize < 2)
+            {
+                return numArray;
+            }
+
+            var sortDone
+
+            do {
+
+                sortDone = true;
+
+                for(var i=0; i<=arraySize-1; i++)
+                {
+                    if(numArray[i+1] > numArray[i])
+                    {
+                        sortDone = false;
+
+                        var temp = numArray[i];
+                        numArray[i] = numArray[i+1];
+                        numArray[i+1] = temp;
+                    }
+
+                }
+
+            } while(sortDone == false)
+
+            var min = numArray[0];
+
+            var max = numArray[9];
+
+            var sum = max + min
+
+            alert(sum)
+
+            idDivOutput.innerHTML = numArray;
+        }
+    </script>
+</head>
+
+<body onload="GearShift()">
+    
+    <input type=button value="Do something" onclick="Uprising()">
+    <input type=button value="Do something else" onclick="Downfall()">
+
+    <div id="idDivOutput"></div>
+
+</body>
+</html>

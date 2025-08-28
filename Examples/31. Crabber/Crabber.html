@@ -1,0 +1,276 @@
+<html>
+	<head>
+
+		<style>
+			canvas{
+				background: #dddddd;
+			}
+		</style>
+
+		<script>
+			// This class represents a rectangle object
+			class rectClass{
+				constructor(rectX, rectY, rectWidth, rectHeight, rectImg){
+					this.x = rectX;
+					this.y = rectY;
+					this.width = rectWidth;
+					this.height = rectHeight;
+
+					this.img = new Image();
+					this.img.src = rectImg;
+				}
+
+				//methods for the rectangle class
+				//object's movements
+				moveLeft(){
+					this.x -= 75;
+				}
+				moveRight(){
+					this.x += 75;
+				}
+				moveUp(){
+					this.y -= 75;
+				}
+				moveDown(){
+					this.y += 75;
+				}
+				wrapLR()
+				{
+					//tell object to move the right
+					this.x += 5;
+					
+					
+				}
+				// The rectangle draws itself
+				draw(){
+					c.drawImage(this.img,
+								this.x,
+								this.y,
+								this.width,
+								this.height);
+				}
+
+				/* Returns true if this rectangle intersects the rectangle "rect", and false otherwise.
+				* Example:
+				*		var cat = new rectClass(300, 200, 100, 100, "cat.jpg");
+				*		var dog = new rectClass(600, 400, 150, 150, "dog.jpg"):
+				*		if (cat.intersects(dog)){ ... }
+				*	OR:	if (dog.intersects(cat)){ ... }
+				*/
+				intersects(rect){
+					if (this.x < rect.x + rect.width &&
+						this.x + this.width > rect.x &&
+						this.y < rect.y + rect.height &&
+						this.y + this.height > rect.y)
+					{
+						return true;
+					}
+					else{
+						return false;
+					}
+				}
+			}
+
+			//initialize our rectClass objects
+			var frog = new rectClass(0, 0, 75, 75, "frog.png");
+			var crab = new rectClass(400, 300, 75, 75, "crab.png");
+			var fly = new rectClass(725, 525, 75, 75, "fly.png");
+
+
+		
+			// Canvas context; used to call Canvas methods
+			var c;
+
+			// Canvas width and height.
+			var cWidth, cHeight;
+
+			// Stores the current keyboard state
+			var curkeys = [];
+			
+			// Stores keys that have been newly pressed since last update
+			var newkeys = [];
+
+
+			// The current game state, can be one of:
+			//		1. "play" - the main playing phase of the game
+			//		2. "win" - after frog gets fly
+			//		3. "lose" - after crab gets frog
+			var gameState = "play";
+
+			//Add global variables for the amount of wins and losses
+			var winCounter = 0;
+			var lossCounter = 0;
+
+			
+			// Initializes entire game framework. This method should only be called
+			// once, by the body onload event handler.
+			function gameFrameworkInit(){		
+				// Initialize key arrays
+				for (i = 0; i < 256; i++){
+					curkeys[i] = false;
+					newkeys[i] = false;
+				}
+			
+				// Initialize global variables for canvas
+				c = myCanvas.getContext('2d');
+				cWidth = myCanvas.width;
+				cHeight = myCanvas.height;
+
+
+				// Start listeners for getting keyboard state
+				window.addEventListener('keydown',
+										function(e){
+											if (!curkeys[e.keyCode]){
+												curkeys[e.keyCode] = true;
+												newkeys[e.keyCode] = true;
+											}
+										}
+									);
+				
+				window.addEventListener('keyup',
+										function(e){ curkeys[e.keyCode] = false; }
+									);
+
+				// Schedule the update function to be called right before the next repaint.
+				// (At the end of the update function, it will schedule itself to be called
+				// again before the NEXT repaint, and so on.
+				window.requestAnimationFrame(gameUpdate);
+			}
+
+
+			function gameUpdate(){
+				// YOUR CODE GOES HERE
+				//If we are currently in the gameState "play"
+				//these actions are allowed
+				if(gameState == "play")
+				{
+					//tell the crab to wrap around the canvas
+					crab.wrapLR()
+
+					//Movement code for the frog using
+					//the arrow keys
+					if(newkeys[37])		//left arrow key
+					{
+						frog.moveLeft();
+					}
+					if(newkeys[39])		//right arrow key
+					{
+						frog.moveRight();
+					}
+					if(newkeys[38])		//up arrow key
+					{
+						frog.moveUp();
+					}
+					if(newkeys[40])		//down arrow key
+					{
+						frog.moveDown();
+					}
+				}
+
+
+				//Collision logic for our game
+				//if frog hits crab, lose
+				if(frog.intersects(crab))
+				{
+					//change the gameState to lose
+					gameState = "lose";
+					lossCounter += 1;
+				}
+				//if frog hits fly, win
+				if(frog.intersects(fly))
+				{
+					//change the gameState to lose
+					gameState = "win";
+					winCounter += 1;
+				}
+
+				if(gameState == "lose")
+				{
+
+					
+
+					if(newkeys[32])
+					{
+						frog.x = 0;
+						frog.y = 0;
+
+						gameState = "play"
+					}
+				}
+				if(gameState == "win")
+				{
+					//if user presses space key,
+					//it will restart
+					// 1) recongnize when the user clicks the space key
+					// if they click the space key, the following happens
+					//	A) Reset frog position
+					//	**any other objects that have hifted position
+					//				should reset
+
+					
+
+					if(newkeys[32])
+					{
+						frog.x = 0;
+						frog.y = 0;
+
+						gameState = "play"
+					}
+				}
+				//*********DO NOT CHANGE OR ADD CODE BELOW THIS LINE*********
+				// Reset newkeys
+				for (i = 0; i < 256; i++){
+					newkeys[i] = false;
+				}
+
+				// At the end of the update function, repaint the screen
+				gameDraw();
+					
+				// Last thing the update function does is to schedule itself to be called
+				// again before the next repaint
+				window.requestAnimationFrame(gameUpdate);
+			}
+
+			function gameDraw(){
+				// Clear the canvas before we draw the current frame
+				c.clearRect(0,0,cWidth,cHeight);
+				//*******DO NOT CHANGE OR ADD ANY CODE ABOVE THIS LINE********
+
+				c.font = "30px Arial"
+				c.fillText("Wins: " + winCounter , 650, 30)
+				c.fillText("Loss: " + lossCounter , 650, 60)
+
+				// YOUR CODE GOES HERE
+				frog.draw();
+				crab.draw();
+				fly.draw();
+
+				if(gameState == "play")
+				{
+					frog.draw()
+					crab.draw()
+					fly.draw()
+				}
+				if(gameState == "lose")
+				{
+					c.font = "30px Times";
+					c.fillText("You lost you clown, Can't belieeve eet." , 200, 500);
+					
+					
+
+				}
+				if(gameState == "win")
+				{
+					c.font = "30px Times";
+					c.fillText("Well played you clown, Can't belieeve eet." , 200, 500);
+
+				}
+			}
+		</script>
+	</head>
+	<body onload="gameFrameworkInit()">
+		
+		<canvas id="myCanvas" width="800" height="600"></canvas>
+
+	</body>
+</html>

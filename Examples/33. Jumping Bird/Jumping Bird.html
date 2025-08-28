@@ -1,0 +1,239 @@
+<html>
+<head>
+
+	<style>
+		canvas{
+			background: #dddddd;
+		}
+	</style>
+
+	<script>
+
+
+		// Represents a bird object. It will eventually jump and shoot pebbles.
+		class birdClass{
+			constructor()
+			{
+				// ADD YOUR CONSTRUCTOR CODE HERE FOR THE FOLLOWING ATTRIBUTES:
+				//		x, y, width, height, img
+				// (Hard-code in reasonable values for these attributes)
+
+				this.x =  200
+				this.y = 400
+				this.width = 100
+				this.height = 100
+				this.bird = new Image()
+				this.bird.src = "bird.png"
+
+				//create a boolean variable that keeps track of whether
+				//or not the ird is in air
+				// false = bird on ground
+				// true = bird in air
+
+				this.bInAir = false;
+
+				//create a variable to keep track of our jumping speed(current y speed)
+				this.curYspeed = 0;
+			}
+
+			//Jump method
+			Fly()
+			{
+				//ONLY ALLOWED TO JUMP WHEN ON THE GROUND
+				if(this.bInAir == false)
+				{
+					this.bInAir = true
+					
+					this.curYspeed=-20
+				}
+				
+			}
+
+			//Update method
+			Update()
+			{
+				//if the bird is in the air
+				if(this.bInAir == true)
+				{
+					//y-value of the bird to change by whatever the
+					//current speed is in the y-direction
+					this.y += this.curYspeed
+
+					//reduce magnitude of upward velocity.(make it less negative.)
+					//this will simulate the ffect of gravity of pulling on the bird
+					//while it is in the air
+					this.curYspeed++
+
+					if(this.y >= 400)
+					{
+						this.bInAir = false
+					}
+				}
+				
+			}
+
+			// The bird draws itself on the screen
+			draw()
+			{
+				c.drawImage(this.bird, this.x, this.y, this.width, this.height)
+			}
+		}
+
+		var Bird = new birdClass()
+
+		// Represents a pebble object that the bird shoots
+		class pebbleClass{
+			constructor(pebbleX, pebbleY)
+			{
+				// ADD YOUR CONSTRUCTOR CODE HERE FOR THE FOLLOWING ATTRIBUTES:
+				//		x, y, width, height, img, and bVisible (set to false by default)
+				this.x = pebbleX
+				this.y = pebbleY
+				this.width = 25
+				this.height = 25
+				this.image = new Image()
+				this.image.src = "pebble.png";
+				this.bVisible = false
+			}
+			// If this pebble is visible, then move it to the right.
+			// If the pebble goes off the screen, mark it invisible.
+			update()
+			{
+				if(this.bVisible == true)
+				{
+					this.x += 10
+
+					if(this.x >= cWidth)
+					{
+						this.bVisible = false
+					}
+				}
+				if(this.bVisible == false)
+				{
+
+
+
+				}
+			}
+			// If this pebble is visible, then draw it on the screen.
+			draw()
+			{
+				if(this.bVisible == true)
+				{
+					c.drawImage(this.image, this.x, this.y, this.width, this.height)
+				}
+				
+			}
+		}
+
+		var Pebble = new pebbleClass(50,50)
+
+		// Canvas context; used to call Canvas methods
+		var c;
+
+		// Canvas width and height.
+		var cWidth, cHeight;
+
+		// Stores the current keyboard state
+		var curkeys = [];
+		
+		// Stores keys that have been newly pressed since last update
+		var newkeys = [];
+
+		//Global variables for background
+		
+		var rectImg = new Image();
+		rectImg.src = "background.png";
+
+		// Initializes entire game framework. This method should only be called
+		// once, by the body onload event handler.
+		function gameFrameworkInit(){		
+			// Initialize key arrays
+			for (i = 0; i < 256; i++){
+				curkeys[i] = false;
+				newkeys[i] = false;
+			}
+		
+			// Initialize global variables for canvas
+			c = myCanvas.getContext('2d');
+			cWidth = myCanvas.width;
+			cHeight = myCanvas.height;
+
+
+			// Start listeners for getting keyboard state
+	        window.addEventListener('keydown',
+	        						 function(e){
+										if (!curkeys[e.keyCode]){
+											curkeys[e.keyCode] = true;
+											newkeys[e.keyCode] = true;
+										}
+									 }
+	        					   );
+	        
+	        window.addEventListener('keyup',
+	        						 function(e){ curkeys[e.keyCode] = false; }
+	        					   );
+
+			// Schedule the update function to be called right before the next repaint.
+			// (At the end of the update function, it will schedule itself to be called
+			// again before the NEXT repaint, and so on.
+			window.requestAnimationFrame(gameUpdate);
+		}
+
+
+
+		function gameUpdate()
+		{
+			
+			if(newkeys[32]) //Space bar
+			{
+				Bird.Fly()
+			}
+			if(newkeys[70]) //F key
+			{
+				if(Pebble.bVisible == false)
+				{
+					Pebble.bVisible = true;
+					Pebble.x = Bird.x + Bird.width;
+					Pebble.y = Bird.y + Bird.height/2;
+				}
+			}
+			
+			Pebble.update()
+			Bird.Update()  
+			// DO NOT ADD OR MODIFY ANY CODE BELOW HERE
+
+			// Reset newkeys
+			for (i = 0; i < 256; i++){
+				newkeys[i] = false;
+			}
+
+			// At the end of the update function, repaint the screen
+			gameDraw();
+				
+			// Last thing the update function does is to schedule itself to be called
+			// again before the next repaint
+			window.requestAnimationFrame(gameUpdate);
+		}
+
+		function gameDraw()
+		{
+			// Clear the canvas before we draw the current frame
+			c.clearRect(0,0,cWidth,cHeight);
+
+			c.drawImage(rectImg, 0, 0, 800, 600)
+			
+			Pebble.draw()
+			Bird.draw()
+		}
+
+
+	</script>
+</head>
+
+<body onload="gameFrameworkInit()">
+	
+	<canvas id="myCanvas" width="800" height="600"></canvas>
+
+</body>
+</html>

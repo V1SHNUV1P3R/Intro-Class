@@ -1,0 +1,137 @@
+<html>
+<head>
+    <title>Zim gaming</title>
+
+    <script>
+        // When the page loads, this global variable gets initialized
+        // with the following 3 elements
+        var nameArray = ["Bob", "Alice", "Carol"];
+
+        // This event handler function displays the elements
+        // to nameArray located at the index from idTxtNameIndex
+        function showNameAtIndex()
+        {
+            var idx = Number(idTxtNameIndex.value);
+            idDivOutput.innerHTML = nameArray[idx];
+        }
+        // This event handler function uses the showArray method
+        // to display all elements of nameArray
+        function showAllNames()
+        {
+            showArray(nameArray);
+        }
+
+        // This function displays all of the elements of inputArray
+        // in the "idDivOutput" div
+        function showArray(inputArray)
+        {
+            // array size is the size of the array
+            // currently, the size of the array with Alice,
+            // Bob, and Carol is: 3
+            var arraySize = inputArray.length;
+            output = "";
+
+            for(var i = 0;  i < arraySize; i++)
+            {
+                output += inputArray[i] + "<br>";
+            }
+
+            idDivOutput.innerHTML = output;
+        }
+        function addName()
+        {
+            var newname = idTxtName.value
+            var output;
+        
+
+            if(newname == "")
+            {
+                alert("Input a name")
+                //alert the message
+                
+            }
+           else
+           {
+            nameArray.push(newname);
+
+            alert("Name added.")
+           }
+
+        }
+        function deleteName()
+        {
+            var newname = idTxtName.value;
+            var loopCounter = 0;
+            var arraySize = nameArray.length;
+
+            if(newname == "")
+            {
+                alert("Please enter a name to remove.")
+            }
+            else
+            {
+                while(loopCounter <= arraySize)
+                {
+                    //check if the name the user typed is in
+                    //the array at that specific index
+                    if(newname == nameArray[loopCounter])
+                    {
+                        //remove any instance of the name the user typed
+                        nameArray.splice(loopCounter, 1)
+
+                    }
+                    else
+                    {
+                        //names didn't match, so move to the
+                        //next index position
+                
+                        //increment our loopCounter variable
+                        loopCounter++;
+                    }
+                }
+            }
+
+            
+        }
+        function alertNameInfo()
+        {
+           
+            nameArray.sort()
+
+            //find how many objects are in the array
+            var arraySize = nameArray.length
+
+          output = "There are " + arraySize + " names on the list. By alphabetical ";
+          output += "order, the first name is " + nameArray[0] + "and the last name is " + nameArray[arraySize - 1]
+
+          alert(output)
+        }
+
+
+
+
+    </script>
+</head>
+
+<body>
+    Name: <input type=text id="idTxtName"><br><br>
+
+
+    Index: <input type=text id="idTxtNameIndex"><br><br>
+
+    <input type=button value="Show name at index" onclick="showNameAtIndex()">
+    <br><br>
+    <input type=button value="Show all names" onclick="showAllNames()">
+    <br><br>
+    <input type=button value="Add name" onclick="addName()">
+    <br><br>
+    <input type=button value="Delete name" onclick="deleteName()">
+    <br><br>
+    <input type=button value="Check names" onclick="alertNameInfo()">
+    
+
+<div id=idDivOutput></div>
+
+</body>
+
+</html>

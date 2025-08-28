@@ -1,0 +1,342 @@
+<html>
+<head>
+	<style>
+		canvas{
+			background: #dddddd;
+		}
+	</style>
+	<script>
+		//add the audio to the file
+		var sndCymbal = new Audio('cymbal.wav');
+		var sndKick = new Audio('kick.wav');
+		var sndSnare = new Audio('snare.wav');
+		var sndTop = new Audio('top.wav');
+
+
+		function getRndInt(min, max) 
+		{
+  		return Math.floor(Math.random() * (max - min) ) + min;
+		}
+		// This timer class keeps track of how much time has elapsed
+		// since the last time it fired.
+		//				**1000 miliseconds = 1 second**
+		class timerClass{
+			constructor(timeIntervalMS){
+				// Initialize oldTime to be the time of creation
+				this.oldTime = new Date();
+
+				// Set interval to elapse before the timer fires
+				this.interval = timeIntervalMS;
+				
+				// Keeps track of the # of milliseconds accumulated since the last firing
+				this.accum = 0;
+				
+				
+			}
+
+
+			// This method returns true if the timer is ready to fire, false otherwise
+			// If it returns true, then resets fire interval
+			isReady(){
+				var curTime = new Date();
+				var delta = curTime - this.oldTime;
+
+				this.accum += delta;
+				this.oldTime = curTime;
+				if (this.accum > this.interval){
+					this.accum = 0;
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+		}
+
+		
+
+		//initialize my timerClass objects
+		var cymbalTimer = new timerClass(500);
+		var kickTimer = new timerClass(200);
+		var snareTimer = new timerClass(400);
+		var topTimer = new timerClass(700);
+
+		//global variables for whether the audio is
+		//on(true)	off(false)
+		var bCymbal = true;
+		var bKick = true;
+		var bSnare = true;
+		var bTop = true;
+
+		class RectClass
+		{
+			constructor(RectX, RectY, RectWidth, RectHeight)
+			{
+				this.x = RectX;
+                this.y = RectY;
+                this.Width = RectWidth;
+				this.Height = RectHeight;
+
+				//controls the color we will make our
+				//rectangle and text
+				this.color = "red";
+
+				//Create our timer for the rectClass.
+				this.timer = new timerClass(1000);
+			}
+			Update() //Updates the rectangle
+			{
+				//if the rectangle's timer is ready, thn we randomly
+				//generate the necessary stuff
+				if(this.timer.isReady())
+				{
+				//Random integer between 100 and 600 for x
+					this.x = getRndInt(100,600);
+				//Random integer between 100 and 400 for y
+					this.y = getRndInt(100,400);
+				//Random integer between 75 and 150 for width
+					this.Width = getRndInt(75,150);
+				//Random integer between 75 and 150 for height
+					this.Height = getRndInt(75,150);
+  				
+
+				//three numbers here, for RGB color
+				//If the rect is red, make it green
+					if(this.color == "red")
+					{
+						this.color = "green";
+					}
+					else if(this.color == "green")	//change to blue
+					{
+						this.color = "blue";
+					}
+					else if(this.color == "blue")	//restart the cycle
+					{
+						this.color = "red";
+					}
+				}
+			}
+			
+			draw()//Allows this to draw a different rectangle or quad
+			{	
+				//generate a random color for us to use for the
+				//rectangle and text on the canvas
+				c.fillStyle = this.color;
+
+				//The way to make the rectangle 
+				c.fillRect(this.x, this.y, this.Width, this.Height)	
+				
+				c.fillStyle="#FF0000";
+
+				c.font = "24px Arial";
+
+				c.fillText("X: " + this.x, 650, 30);
+				c.fillText("Y: " + this.y, 650, 50);
+				c.fillText("width: " + this.Width, 650, 75);
+				c.fillText("Height: " + this.Height, 650, 100);
+				c.fillText("Interval: " + this.timer.interval, 650, 125);
+			}
+		}
+
+		 var rectangle = new RectClass(100, 200, 150, 75)
+
+
+
+
+
+		// Canvas context; used to call Canvas methods
+		var c;
+
+		// Canvas width and height.
+		var cWidth, cHeight;
+
+		// Stores the current keyboard state
+		var curkeys = [];
+		
+		// Stores keys that have been newly pressed since last update
+		var newkeys = [];
+								
+		// Initializes entire game framework. This method should only be called
+		// once, by the body onload event handler.
+		function gameFrameworkInit(){		
+			// Initialize key arrays
+			for (i = 0; i < 256; i++){
+				curkeys[i] = false;
+				newkeys[i] = false;
+			}
+		
+			// Initialize global variables for canvas
+			c = myCanvas.getContext('2d');
+			cWidth = myCanvas.width;
+			cHeight = myCanvas.height;
+
+			// Start listeners for getting keyboard state
+	        window.addEventListener('keydown',
+	        						 function(e){
+										if (!curkeys[e.keyCode]){
+											curkeys[e.keyCode] = true;
+											newkeys[e.keyCode] = true;
+										}
+									 }
+	        					   );
+	        
+	        window.addEventListener('keyup',
+	        						 function(e){ curkeys[e.keyCode] = false; }
+	        					   );
+
+			// Schedule the update function to be called right before the next repaint.
+			// (At the end of the update function, it will schedule itself to be called
+			// again before the NEXT repaint, and so on.
+			window.requestAnimationFrame(gameUpdate);
+		}
+		function gameUpdate(){
+			// ADD YOUR UPDATE CODE BELOW THIS LINE
+			//if the cymbal sound is on(true)
+			//Then we play the cymbal sound on its timer.
+			if(bCymbal == true)
+			{
+				if(cymbalTimer.isReady())	
+				{
+					//Set the start time of the audio to 0 seconds
+					sndCymbal.currentTime = 0
+					//Playing the cymbal
+					sndCymbal.play()
+				}
+			}
+
+			if(bKick == true)
+			{
+				if(kickTimer.isReady())		//Kick 
+				{
+				//Set the start time of the audio to 0 seconds
+					sndKick.currentTime = 0
+				//Playing the cymbal
+					sndKick.play()
+				}
+			}
+			if(bSnare == true)
+			{
+			 if(snareTimer.isReady())		//Snare
+			 {
+			 	//Set the start time of the audio to 0 seconds
+			 	sndSnare.currentTime = 0
+			 	//Playing the cymbal
+			 	sndSnare.play()
+			 }
+			}
+			if(bTop == true)
+			{
+				if(topTimer.isReady())	//Top 
+				{
+					//Set the start time of the audio to 0 seconds
+					sndTop.currentTime = 0
+					//Playing the cymbal
+					sndTop.play()
+				}
+			}
+
+			//Toggle whether the sounds are on or off.
+			if(newkeys[67])	//C key
+			{	
+				//If the sound is currently playing(true)
+				//then turn it off, vice versa
+				if(bCymbal == true)
+				{
+					//Set the cymbal's boolean false
+					//It will stop the sound from playing
+					bCymbal = false;
+				}	
+				else
+				{
+					bCymbal = true
+				}
+				console.log(bCymbal)
+				
+			}
+			if(newkeys[75])	//K key
+			{	
+				//If the sound is currently playing(true)
+				//then turn it off, vice versa
+				if(bKick == true)
+				{
+					//Set the cymbal's boolean false
+					//It will stop the sound from playing
+					bKick = false;
+				}	
+				else
+				{
+					bKick = true
+				}
+				console.log(bKick)
+				
+			}
+			if(newkeys[83])	//S key
+			{	
+				//If the sound is currently playing(true)
+				//then turn it off, vice versa
+				if(bSnare == true)
+				{
+					//Set the cymbal's boolean false
+					//It will stop the sound from playing
+					bSnare = false;
+				}	
+				else
+				{
+					bSnare = true
+				}
+				console.log(bSnare)
+				
+			}	
+			if(newkeys[84])	//T key
+			{	
+				//If the sound is currently playing(true)
+				//then turn it off, vice versa
+				if(bTop == true)
+				{
+					//Set the cymbal's boolean false
+					//It will stop the sound from playing
+					bTop = false;
+				}	
+				else
+				{
+					bTop = true
+				}
+				console.log(bTop)
+				
+			}	
+
+			//tell my rectangle to update itself
+			rectangle.Update();
+
+
+
+
+			//*********************************//
+			//DONT ADD ANYTHING BELOW THIS LINE
+			//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&//
+			// Reset newkeys
+			for (i = 0; i < 256; i++){
+				newkeys[i] = false;
+			}
+
+			// At the end of the update function, repaint the screen
+			gameDraw();
+				
+			// Last thing the update function does is to schedule itself to be called
+			// again before the next repaint
+			window.requestAnimationFrame(gameUpdate);
+		}
+
+		function gameDraw(){
+			// Clear the canvas before we draw the current frame
+			c.clearRect(0,0,cWidth,cHeight);
+
+			// ADD YOUR DRAW CODE HERE
+			rectangle.draw()
+		}
+	</script>
+</head>
+<body onload="gameFrameworkInit()">	
+	<canvas id="myCanvas" width="800" height="600"></canvas>
+</body>
+</html>

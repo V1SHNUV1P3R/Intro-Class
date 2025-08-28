@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <title>DOM Practice</title>
+  
+        <style>
+            
+        </style>
+
+
+        <script>
+            function Donebutton1()
+            {
+                document.getElementById("idBtnDone").value = "Are you sure?";
+            }
+            function Donebutton2()
+            {
+                document.getElementById("idBtnDone").value = "Done";
+            }
+            function alertInfo()
+            {
+                
+            var message = document.getElementById("idTxtOutput").value += "\n";
+            message += document.getElementById("idSlctColor").value;
+            alert(message);
+
+
+            document.getElementById("idBtnDone").value += 1;
+
+            }
+            function Changecolors()
+            {
+                document.body.style.backgroundColor = "green";
+                document.getElementById("idTxtOutput").value = "Why did you change it"
+            }
+
+            function changeText()
+            {
+                document.getElementById("idTxtOutput").style = "font-family:Impact;"
+                document.getElementById("idTxtOutput").style = "font-size:30px"
+            }
+            function changeBackText()
+            {
+                document.getElementById("idTxtOutput").style = "font-family:Arial;"
+            }
+
+            //This can be able to give an alert to where ever you click except for the buttons and the text
+             function Bodyalert()
+            {
+                alert("dont click here")
+            }
+
+        </script>
+    </head>
+
+    <body onclick="Bodyalert()">
+        <form>
+        <input type="text" id="idTxtOutput" onFocus = "changeText()" onblur = "changeBackText()">
+        <br><br>
+        
+        <select id="idSlctColor">
+            <option>Red</option>
+            <option>Green</option>
+            <option>Blue</option>
+         </select>
+        <br><br>
+        
+        <input type="button" id="idBtnDone" value="done" onmouseover="Donebutton1()" onmouseout="Donebutton2()" onclick="alertInfo()">
+        <input type="button" id="idBtnChange" value= "change" onclick="Changecolors()">
+   
+    </form>
+    </body>
+
+
+
+
+
+</html> 

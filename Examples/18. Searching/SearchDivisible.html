@@ -1,0 +1,123 @@
+<html>
+    <head>
+        <title>Lucas gaming MK 2</title>
+   
+<script>
+     var birthYears = [];
+
+       
+     function BirthArray(year)
+    {     
+           
+        for(var i = 0; i <= 20; i++)
+        {
+            var randNum = Math.floor(Math.random()*100);
+            randNum += 1922;
+
+            birthYears.push(randNum)
+
+            var output;
+        }
+                console.log(birthYears);
+
+                output = "Here is a list of randomly generated ages"
+                output += "<br>" + "<br>" + birthYears;
+
+                idDivBirthYears.innerHTML = output;
+    }
+    function AlertSeniors()
+    {
+        //create a variable that will keep track of how man senior
+        //citizens there are in our array
+        var numSeniors = 0;
+            for(var i = 0; i < 20; i++)
+            {
+                //Check if the current index in the array has a value that
+                //is 1967 or less. If that's true, we add 1 to
+                //the total number of senior citizens
+                if(birthYears[i] <= 1963)
+                {  
+                    //add 1 to the numSeniors variable
+                    numSeniors++
+                }
+
+            }
+            console.log("Oldies " + numSeniors);
+
+            //create an output message that will be alerted at the end
+            var output = "In our group of 20 individuals, " + numSeniors;
+            output += " of them are eligible for senior citizen discounts."
+
+            alert(output)
+    }
+    function AlertKids()
+    {
+        var numKids = 0
+            
+            for(var i = 0; i < 20; i++)
+            {
+
+                if(birthYears[i] >= 2016)
+                {
+                    numKids++
+
+                }
+
+            }
+            console.log("Kids: " + numKids)
+
+            var output = "In our group of 20 individuals, " + numKids;
+            output += " of them are in the group!"
+
+            alert(output)
+    }
+    function AlertDuplicates()
+    {
+     
+        
+
+            //loop through our array and look for any duplicates
+            for(var i = 0; i < 20; i++)
+            {
+             var currentBY = birthYears[i]
+
+            var count = BirthArray(currentBY)
+            
+            if(count > 1)
+            {
+                output = "In our group of 20 individuals , we have " + count;
+                output += " individuals both born in " + currentBY + ".";
+
+                alert(output) 
+
+                return;
+            } 
+        
+    
+
+            }
+            
+           
+
+    }
+</script>
+
+    </head>
+
+<body onload = "BirthArray()">
+   
+  
+
+    
+    <input type="button" value = "Alert Seniors" onclick  = "AlertSeniors()">
+    <input type="button" value = "Any kids" onclick  = "AlertKids()">
+    <input type="button" value = "Duplicates" onclick  = "AlertDuplicates()">
+    <br><br>
+    
+
+
+    <div id="idDivBirthYears"></div>
+
+</body>
+
+</html>

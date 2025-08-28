@@ -1,0 +1,266 @@
+<html>
+<head>
+
+	<style>
+		canvas{
+			background: #dddddd;
+		}
+	</style>
+
+	<script>
+
+		// Canvas context; used to call Canvas methods
+		var c;
+
+		// Canvas width and height.
+		var cWidth = 800, cHeight = 600;
+
+		// Stores the current keyboard state
+		var curkeys = [];
+		
+		// Stores keys that have been newly pressed since last update
+		var newkeys = [];
+
+		// This class can be used scroll a background image "on loop".
+		// (Can be scrolled infinitely in either direction on loop)
+		class infiniteScrollingBackgroundClass{
+			constructor(bgSrc,			// Name of the image file (string)
+						bgSpeed)		// Speed of scrolling (integer)
+			{
+				this.img = new Image();
+				this.img.src = bgSrc;
+				this.x1 = 0;
+				this.x2 = cWidth;
+				this.speed = bgSpeed;
+			}
+			// Scrolls the background image to the right
+			// (So the character looks like it's moving to the left)
+			scrollRight(){
+				this.x1 += this.speed;
+				this.x2 += this.speed;
+
+				if (this.x2 > cWidth){
+					this.x1 = -cWidth;
+					this.x2 = 0;
+				}
+			}
+			// Scrolls the background image to the left
+			// (So the character looks like it's moving to the right)
+			scrollLeft(){
+				this.x1 -= this.speed;
+				this.x2 -= this.speed;
+
+				if (this.x2 < 0){
+					this.x1 = 0;
+					this.x2 = cWidth;
+				}
+			}
+
+			// Draw the background image
+			draw(){
+				c.drawImage(this.img, this.x1, 0, cWidth, cHeight);
+				c.drawImage(this.img, this.x2, 0, cWidth, cHeight);
+			}
+		}
+
+		var Background;
+
+		// This class can be used display & scroll a background image without looping.
+		// (The background image is bigger than the canvas size, and scrolling displays
+		// various parts of it on-screen)
+		class zoomScrollingBackgroundClass{
+
+			constructor(bgSrc,					// Name of the image file (string)
+						bgSpeed,				// Speed of scrolling (integer)
+						bgWidth)				// Width of background in its entirety (integer)
+			{
+				//image file to the object
+				this.img = new Image();
+				this.img.src = bgSrc;
+
+				//gives the background a set width
+				this.width = bgWidth;
+
+				//gives the background a speed that it will move
+				this.speed = bgSpeed;
+
+				//gives it a position
+				this.x = 0;
+			}
+
+			// Scrolls the background image to the right
+			// (So the character looks like it's moving to the left)
+			scrollRight(){
+				if (this.x + this.speed <= 0)
+				{
+					this.x += this.speed;
+				}
+			}
+			// Scrolls the background image to the left
+			// (So the character looks like it's moving to the right)
+			scrollLeft(){
+				if (this.x > -this.width + cWidth)
+				{
+					this.x -= this.speed
+				}
+			}
+			// Draw the background image
+			draw(){
+				c.drawImage(this.img, this.x, 0, this.width, cHeight);
+			}
+		}
+		class jetClass
+		{
+			//Constructor: Assign values for the following attributes:
+			//	x,y,width,height,img, and direction (can be "left or "right")
+			constructor()
+			{
+				this.x = 300
+				this.y = 200
+				this.width = 100
+				this.height = 50
+				this.image = new Image();
+				this.image.src = "jetRight.png";
+
+				//create the ability to remember the direction
+				//the jet is flying
+				this.direction = "right";
+			}
+			Up()
+			{
+				this.y -= 50;
+
+				
+			}
+			down()
+			{
+				this.y += 50;
+			}
+			draw()
+			{
+				if(this.direction == "right")
+				{
+					this.image.src = "jetRight.png"
+				}
+				if(this.direction == "left")
+				{
+					this.image.src = "jetLeft.png"
+				}
+
+				c.drawImage(this.image, this.x, this.y, this.width, this.height)
+			}
+
+		}
+
+		var jet = new jetClass()
+
+		// Initializes entire game framework. This method should only be called
+		// once, by the body onload event handler.
+		function gameFrameworkInit(){
+			// Initialize key arrays
+			for (i = 0; i < 256; i++){
+				curkeys[i] = false;
+				newkeys[i] = false;
+			}
+
+			// Initialize global variables for canvas
+			c = myCanvas.getContext('2d');
+			cWidth = myCanvas.width;
+			cHeight = myCanvas.height;
+
+			//Instance of he infinite scrolling background
+			//Background = new infiniteScrollingBackgroundClass("background.png", 30)
+
+			//Finite scrolling background
+			Background = new zoomScrollingBackgroundClass("background.png", 30, 16000)
+
+
+			// Start listeners for getting keyboard state
+	        window.addEventListener('keydown',
+	        						 function(e){
+										if (!curkeys[e.keyCode]){
+											curkeys[e.keyCode] = true;
+											newkeys[e.keyCode] = true;
+										}
+									 }
+	        					   );
+	        
+	        window.addEventListener('keyup',
+	        						 function(e){ curkeys[e.keyCode] = false; }
+	        					   );
+
+			// Schedule the update function to be called right before the next repaint.
+			// (At the end of the update function, it will schedule itself to be called
+			// again before the NEXT repaint, and so on.
+			window.requestAnimationFrame(gameUpdate);
+		}
+
+
+
+		// Main update loop for the entire game
+		function gameUpdate(){
+
+			// ADD ALL OF YOUR GAME UPDATE LOGIC HERE
+			
+			//controls for scrolling background
+			if(curkeys[37])	//left arrow key
+			{
+				Background.scrollRight()
+				jet.direction = "left"
+			}
+			if(curkeys[39])	//right arrow key
+			{
+				Background.scrollLeft()
+				jet.direction = "right"
+			}
+			if(curkeys[38])
+			{
+				jet.Up()
+			}
+			if(curkeys[40])
+			{
+				jet.down()
+			}
+			if(jet.height >= cHeight - jet.Height)
+			{
+				
+			}
+            //*********************************************
+            //DO NOT ADD OR CHANGE ANY CODE BELOW THIS LINE
+            //*********************************************
+			// Reset newkeys
+			for (i = 0; i < 256; i++){
+				newkeys[i] = false;
+			}
+
+			// At the end of the update function, repaint the screen
+			gameDraw();
+				
+			// Last thing the update function does is to schedule itself to be called
+			// again before the next repaint
+			window.requestAnimationFrame(gameUpdate);
+		}
+
+
+		// Main draw loop for the entire game
+		function gameDraw()
+		{
+			// Clear the canvas before we draw the current frame
+			c.clearRect(0, 0, cWidth, cHeight);
+            //*********************************************
+            //DO NOT ADD OR CHANGE ANY CODE ABOVE THIS LINE
+            //*********************************************
+
+           Background.draw()
+			jet.draw()
+		}
+
+	</script>
+
+</head>
+<body onload="gameFrameworkInit()">
+	
+	<canvas id="myCanvas" width="800" height="600"></canvas>
+
+</body>
+</html>

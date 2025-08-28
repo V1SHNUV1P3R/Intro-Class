@@ -1,0 +1,99 @@
+<html>
+<head>
+        <title>Calc Functions Exercise</title>
+        <style type=text/css>
+                body{
+                    background-color: lightgreen;
+                    color: navy;
+                    font-family: Rockwell;
+
+
+                }
+        
+         </style>
+
+         <script>
+                function findSum(){
+                        //Grab the two imput values from the text boxes
+                        var input1 = Number(document.getElementById("idTxtInput1").value);
+                        var input2 = Number(document.getElementById("idTxtInput2").value);
+
+                        //Find the sum of the two input valies, and put it into the output text box
+                        document.getElementById("idTxtOutput").value = input1 +input2;
+                    
+                }
+
+                //add the functions for math
+                        function findDifference(){
+                        var input1 = Number(document.getElementById("idTxtInput1").value);
+                        var input2 = Number(document.getElementById("idTxtInput2").value);
+                          document.getElementById("idTxtOutput").value = input1 - input2;
+
+                        }
+                        
+                        function findProduct(){
+                        var input1 = Number(document.getElementById("idTxtInput1").value);
+                        var input2 = Number(document.getElementById("idTxtInput2").value);
+                        document.getElementById("idTxtOutput").value = input1 * input2;
+
+
+                        }
+                        
+                        function findDividend(){
+                        var input1 = Number(document.getElementById("idTxtInput1").value);
+                        var input2 = Number(document.getElementById("idTxtInput2").value);
+                        document.getElementById("idTxtOutput").value = input1 / input2;
+
+                        }
+                        // This checs if two numbers are typed into the input are equal or not
+                        //appropriate output message will be 
+                        //IF is a powerful statement
+                        //if the numbers are the same put it is equal and vice versa
+                        function CHECKEQUAL(){
+                        var input1 = Number(document.getElementById("idTxtInput1").value);
+                        var input2 = Number(document.getElementById("idTxtInput2").value);
+                      
+                        }
+                      
+                        if(input1 == input2)
+                        {
+                              document.getElementById("idTxtOutput").value = "These two numbers are equal";
+                        }
+
+                        else
+                        {
+                                document.getElementById("idTxtOutput").value = "These two numbers are not equal";
+                        }
+
+         </script>
+</head>
+
+<body>
+        <form>
+                <input type="text" id="idTxtInput1">
+                <input type="text" id="idTxtInput2">
+
+
+                <br><br>
+                <input type="button" id="idBtnAdd" value="ADD" onclick="findSum()">
+                <!--Add additional buttons here for other math problems-->
+
+
+                <br><br>
+                <input type="button" id="idBtnMinus" value="SUBTRACT" onclick="findDifference()">
+
+                <br><br>
+                <input type="button" id="idBtnMultiply" value="Multiply" onclick="findProduct()">
+
+                <br><br>
+                <input type="button" id="idBtnDivide" value="Divide" onclick="findDividend()">
+                <input type="button" id="idBtnequal" value="equal" onclick="CHECKEQUAL()">
+
+
+                <br><br>
+                <input type="text" id="idTxtOutput">
+
+
+        </form>
+</body>
+</html>

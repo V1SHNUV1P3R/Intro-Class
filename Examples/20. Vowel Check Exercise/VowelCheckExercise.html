@@ -1,0 +1,80 @@
+<html>
+    <head>
+
+    <title>Brick wall balling</title>
+
+    <style>
+
+    </style>
+
+    <script>
+        var Vowels = ["a", "e", "i", "o", "u",]
+        //This function RETURNS the first vowel in the input
+        //If the input does not contain a vowel, return false
+        function findFirstVowel(word)
+        {
+            //Look through each positions of the word the user types into
+            //the text box and find the first vowel(if there is one)
+            //If we find a vowel, we will RETURN that vowel.
+            //If there are no vowels, then we will return false
+            for(var i=0; i < word.length; i++)
+            {
+                //Check if there is a vowel anywhere in the word
+                //If there is a vowel, we will RETURN that vowel
+                if(word[i].toLowerCase() == "a" ||
+                   word[i].toLowerCase() == "e" ||
+                   word[i].toLowerCase() == "i" ||
+                   word[i].toLowerCase() == "o" ||
+                   word[i].toLowerCase() == "u" )
+                {
+                    return word[i];
+
+
+                }
+
+            }
+            //if the word gets no vowels, we leave the loop
+            //and now RETURN false
+            return false;
+        }
+        //This function returns the number of vowels in the input 
+        function getVowelCount(word)
+        {
+            var VowelCount = 0;
+
+            for(var i=0; i < word.length; i++)
+            {
+                if(word[i].toLowerCase() == "a" ||
+                   word[i].toLowerCase() == "e" ||
+                   word[i].toLowerCase() == "i" ||
+                   word[i].toLowerCase() == "o" ||
+                   word[i].toLowerCase() == "u" )
+                   {
+                    
+                  VowelCount++
+
+             
+
+                
+                 }
+            
+            
+                }
+        return VowelCount
+
+           
+
+          
+        }
+    </script>
+</head>
+<body>
+        Enter the word: <input type=text id="idTxtWord">
+
+        <input type=button value="Find the first vowel!" onclick="alert(findFirstVowel(idTxtWord.value))">
+
+        <input type=button value="How many vowels" onclick="alert(getVowelCount(idTxtWord.value))">
+
+</body>
+
+</html>

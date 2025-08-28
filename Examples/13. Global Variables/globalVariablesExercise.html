@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <title>Arya gaming</title>
+
+    
+        <style>
+
+
+        </style>
+        <script>
+           //The following variables: countodd and count even 
+           //are GLOBAL variables, so they are universal in this code,
+           //meaning they can be used in anywhere in the script.
+           
+           //Total count of odds numbers
+           var countodd = 0;
+
+           //total count of even numbers
+           var counteven = 0;
+           
+           function updateEven()
+            {
+                counteven++ ;
+                
+
+              //console.log()
+
+              //This will add whatever is () to the console for you
+              //to view. Many times this is used to help find your erres
+              //This console.log() is here to show us that our countEven
+              //variable is going up by 1 whenever we click the "This is even"
+              //button
+
+              console.log("Num even: " + counteven)
+
+              //create and store our summary
+              var output = "Total number of odd numbers: " + countodd;
+              output += "<br>Total number of even numbers: " + counteven;
+
+              idDivSummary.innerHTML = output;
+
+              showSummary();
+
+              //generate a new random number
+              genRandInt()
+            }
+            function updateOdd()
+            {
+                countodd++ ;
+
+                console.log("Num odd: " + countodd)
+
+              showSummary();
+        
+                //generate a new random number
+                genRandInt();
+
+            }
+            function genRandInt()
+            {
+               var randInt = Math.random(1 , 1000)
+               randInt = randInt * 1000;
+               randInt = Math.ceil(randInt)
+               randInt += 1;
+
+                idDivNum.innerHTML = randInt;
+            }
+           //This function 
+            function showSummary()
+            {
+                  //create and store our summary
+             var output = "Total number of odd numbers: " + countodd;
+              output += "<br>Total number of even numbers: " + counteven;
+
+              idDivSummary.innerHTML = output;
+
+
+            }
+
+        </script>
+    
+    </head>
+
+    <body onload = "genRandInt()">
+        
+
+
+
+        <input type=button value="This is even" onclick = "updateEven()">
+        <input type=button value="This is odd" onclick = "updateOdd()">
+        <br><br>
+
+        <div id="idDivNum"></div>
+        <br><br>
+
+        <div id="idDivSummary"></div>
+
+
+    </body>
+
+
+
+</html>

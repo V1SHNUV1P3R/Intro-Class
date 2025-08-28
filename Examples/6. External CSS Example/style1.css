@@ -1,0 +1,42 @@
+body{
+    color: black;
+    font-family: Rockwell;
+    font-size: 20px;
+}
+
+.base{
+        color: red;
+        font-weight: 900; 
+        margin-top: 10px;
+        font-size: 250px;
+        font-family: Times;
+}
+
+.layer1{
+        color: black;
+        margin-top: -130px;
+        font-size: 65px;
+        font-family: Arial;
+}
+
+.layer2{
+        color: blue;
+        margin-top: 50px;
+        font-weight: bold;
+        font-size: 35px;
+        line-height: 55px;
+        font-family: Arial;
+}
+
+p{
+    text-indent: 50px;
+    font-size: 25px;
+    line-height: 30px;
+}
+
+h1{
+    color: red;
+    font-family: Rockwell;
+    text-decoration: underline;
+    font-size: 40px;
+}

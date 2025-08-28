@@ -1,0 +1,42 @@
+<html>
+<head>
+    <title>Yakshraj gaming</title>
+    <script>
+            function countFor(){ //why no parameters??
+                var output = "<h1>I can count to 10!</h1><br>";
+                output += "<h2>Here is counting to 10 using a for loop:</h2><h5>";
+
+                for(var i=1; i<=10; i=i+1){ //notice the syntax of the for loop?
+                    output = output + i + "<br>"
+                }
+                output += "</h5>"
+                document.getElementById("idLoopOutput").innerHTML = output;
+                //why do the above 2 statements go OUTSIDE the loop
+            }
+            function countWhile(){ //why no parameters?
+                var output = "<h1>I can count to 10!</h1><br>";
+                output += "<h2>Here is counting to 10 using a while loop:</h2><h5>";
+
+                    //you have to initialize the counter outside the loop
+                    var loopCounter = 1;
+
+                    //now we can enter the loop
+                    while(loopCounter <= 10){
+                        output = output + loopCounter + "<br>";
+                        loopCounter++;          //increment the counter variable
+                    }
+                    output += "</h5>"
+                    document.getElementById("idLoopOutput").innerHTML = output;
+                    //why do the above 2 statements go OUTSIDE the loop?
+            }
+    </script>
+</head>
+
+<body>
+        <input type=button value="Count using a for loop" onclick="countFor()">
+        <input type=button value="Count using a while loop" onclick="countWhile()">
+
+        <div id="idLoopOutput"></div>
+</body>
+
+</html>

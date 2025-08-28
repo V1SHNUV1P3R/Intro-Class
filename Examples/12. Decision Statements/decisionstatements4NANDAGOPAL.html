@@ -1,0 +1,86 @@
+<html>
+
+<head>
+    <title>Bowie gaming</title>
+
+    <style>
+        
+
+
+
+    </style>
+
+
+</head>
+
+
+<body>
+    <script>
+        function displaySummary()
+        {
+            var Cubs = Number(idTxtCubs.value);
+            var WhiteSox = Number(idTxtWS.value);
+            var Gamehighscore;
+            var teamhighscore;
+            var Scoreboard;
+            var output;
+            var game;
+
+
+        if(Cubs > WhiteSox)
+        {
+            game += "The Cubs are winning "
+
+            
+        
+            if(Cubs >= 8)
+            {
+                game += " The Cubs is highscoring. "
+            }
+        
+        }
+        else if(Cubs < WhiteSox)
+        {
+            game += " The white sox are winning "
+       
+            if(WhiteSox >= 8)
+            {
+                game += " The WhiteSox is highscoring. "
+            }
+         
+        }
+        else if(Cubs == WhiteSox)
+        {
+            game += " It tied. "
+
+        }
+        if(WhiteSox < 8 && Cubs < 8)
+        {
+            game += " Neither team is highscoring. ";
+        }
+
+    alert(game);
+  
+    }
+
+    </script>
+
+
+
+<input type=text id="idTxtCubs"> Cubs
+<br><br>
+<input type=text id="idTxtWS"> WhiteSox
+<br><br>
+<input type=button value="Display Summary" onclick="displaySummary()">
+
+
+
+
+
+
+</body>
+
+
+
+
+</html>

@@ -1,0 +1,112 @@
+<html>
+<head>
+        <title>Tom gaming</title>
+        <script>
+            
+            firstNameAray = ["Bob", "Dave", "Alice", "Carol"];
+            ageArray = [17, 13, 16, 20];
+
+
+
+            //This function sorts inputArray (ascending) and returns the result
+            function bubblesort(inputArray)
+            {
+                //store the length of our array(for when we loop through it)
+                var arraySize = inputArray.length;
+
+                //If the given array has less than 2 elements, then it's already sorted!
+                if(arraySize < 2)
+                {
+                    //our array is in order, so we stop the function
+                    //right at this point
+                    return inputArray;
+                }
+
+                //Keep making passes through the array comparing/swapping adjacent elements.
+                //We do this until we are able to make a pass through the array without
+                // having to make any swaps - since that must mean that the array is sorted.
+
+                //This variable tracks whether the current pass will be the last one
+                var sortDone;
+
+                do{
+                    //Assume that the array is in sorted order, until we
+                    //are proven wrong(i.e. we have to swap elements)
+                    sortDone = true;
+
+
+                    //loop through and check every position in the array
+                    for(var i=0 ; i <= arraySize-1; i++)
+                    {
+                        //if the object in the current inddex is BIGGER THAN
+                        //the object in the NEXT index, then we need
+                        //to swap those 2 objects. 
+                        if(inputArray[i] > inputArray[i+1])
+                        {
+                            //The array was not in sorted order, so we must
+                            //keep making passes through the array
+                            sortDone = false;
+
+                            //Swap the two out-of-order elements
+                            var temp = inputArray[i];
+                            inputArray[i] = inputArray[i+1];
+                            inputArray[i+1] = temp;
+                        }
+                            
+                    }
+
+                }while(sortDone == false)
+
+                //At this point, since we broke out of the while loop, it must 
+                //mean that array is sorted
+                return inputArray;
+
+                //This helper function returns an output string that includes every element
+                // of inputArray. The caller then use the returned string to display it on
+                // the page, alert it, etc.
+                     
+            }
+            function getOutputString(inputArray)
+                {
+                    var arraySize = inputArray.length;
+                    var output = "";
+
+                    for(var i=0; i < arraySize; i++)
+                    {
+                        output += inputArray[i] + "<BR>";
+                    }
+
+                    return output;
+                }
+                //Event handler function showing how bubblesort works for an array of strings
+                function sortColors()
+                {
+
+                    //sorted alphabetically
+                    var colorArray = ["red", "green", "blue", "aqua", "orange", "yellow"];
+                    var sortedArray = bubblesort(colorArray);
+
+                    idDivOutput.innerHTML = getOutputString(sortedArray);
+                }
+                //Event handler function showing how bubblesort works for an array of numbers
+                function sortNumbers()
+                {
+                    //sorted by lowest to highest
+                    var numberArray = [15, 2, 7, 100, 25, 36];
+                    var sortedArray = bubblesort(numberArray);
+
+                    idDivOutput.innerHTML = getOutputString(sortedArray);
+                }
+        </script>
+</head>
+
+<body>
+        <input type="Button" value="Click here to see an example of a bubble sort!" onclick="sortColors()">
+        <input type="Button" value="Click here to see another example of a bubble sort!" onclick="sortNumbers()">
+   
+        
+    <div id="idDivOutput"></div>
+
+</body>
+
+</html>

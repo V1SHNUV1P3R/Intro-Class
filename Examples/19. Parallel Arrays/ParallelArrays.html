@@ -1,0 +1,165 @@
+<html>
+    <head>
+        <title>Gaming Gaming</title>
+
+
+
+    </head>
+
+    <body>
+        <script>
+            //The 12 months of the yera(string value)
+            var monthName = ["August", "May", "February", "October", "July", "April", "June",
+                                "September", "January", "December", "November", "March"];
+            //The 12 months of the year(Integer value)
+            var monthNumber = [8, 5, 2, 10, 7, 4, 6, 9, 1, 12, 11, 3];
+            //Average monthly tempurature in Chicago (degrees Fahrenheit)
+            var avgTemp = [72, 59, 25, 54, 73, 50, 70, 64, 21, 27, 41, 37];
+
+            function showArrays()
+            { 
+                //create our output message that will be put in the div later
+                var output = "";
+                //Loop through our arrays and grab all info from them
+                //adding each peice of info to the output message
+                for(var i = 0; i < 12; i++)
+                {
+                    //add the array info to our output message
+                    output += monthName[i] + " (" + monthNumber[i] + "): " + avgTemp[i] + " degrees F." + "<br>";
+                }
+                //put our output message into the div
+                idDivOutput.innerHTML = output;
+            }
+            function showByChronological()
+            {
+                //store the length of our array(for when we loop through it)
+                var arraySize = monthNumber.length;
+                //If the given array has less than 2 elements, then it's already sorted!
+                if(arraySize < 2)
+                {
+                    //our array is in order, so we stop the function
+                    //right at this point
+                    return monthNumber;
+                }
+                //Keep making passes through the array comparing/swapping adjacent elements.
+                //We do this until we are able to make a pass through the array without
+                // having to make any swaps - since that must mean that the array is sorted.
+                //This variable tracks whether the current pass will be the last one
+                var sortDone;
+
+                do{
+                    //Assume that the array is in sorted order, until we
+                    //are proven wrong(i.e. we have to swap elements)
+                    sortDone = true;
+                    //loop through and check every position in the array
+                    for(var i=0 ; i <= arraySize-1; i++)
+                    {
+                        //if the object in the current inddex is BIGGER THAN
+                        //the object in the NEXT index, then we need
+                        //to swap those 2 objects. 
+                        if(monthNumber[i] > monthNumber[i+1])
+                        {
+                            //The array was not in sorted order, so we must
+                            //keep making passes through the array
+                            sortDone = false;
+                            //Swap the two out-of-order elements
+                            var temp = monthNumber[i];
+                            monthNumber[i] = monthNumber[i+1];
+                            monthNumber[i+1] = temp;
+
+                            var temp = monthName[i];
+                            monthName[i] = monthName[i+1];
+                            monthName[i+1] = temp;
+
+                            var temp = avgTemp[i];
+                            avgTemp[i] = avgTemp[i+1];
+                            avgTemp[i+1] = temp;
+                        }
+                            
+                    }
+
+                }while(sortDone == false)
+                //At this point, since we broke out of the while loop, it must 
+                //mean that array is sorted
+                //We should use our showArrays() function to display
+                showArrays();
+            }
+            function showbyAlphabetical()
+            {
+                monthName.sort()
+                monthNumber.sort()
+                
+
+                showArrays()
+            }
+            function showbyTempAscending()
+            {
+                avgTemp.sort()
+
+                showArrays()
+            }
+            function showbyTempDescending()
+            {
+                 //store the length of our array(for when we loop through it)
+                 var arraySize = monthNumber.length;
+                //If the given array has less than 2 elements, then it's already sorted!
+                if(arraySize < 2)
+                {
+                    //our array is in order, so we stop the function
+                    //right at this point
+                    return monthNumber;
+                }
+                //Keep making passes through the array comparing/swapping adjacent elements.
+                //We do this until we are able to make a pass through the array without
+                // having to make any swaps - since that must mean that the array is sorted.
+                //This variable tracks whether the current pass will be the last one
+                var sortDone;
+
+                do{
+                    //Assume that the array is in sorted order, until we
+                    //are proven wrong(i.e. we have to swap elements)
+                    sortDone = true;
+                    //loop through and check every position in the array
+                    for(var i=0 ; i <= arraySize-1; i++)
+                    {
+                        //if the object in the current inddex is BIGGER THAN
+                        //the object in the NEXT index, then we need
+                        //to swap those 2 objects. 
+                        if(monthNumber[i] > monthNumber[i-1])
+                        {
+                            //The array was not in sorted order, so we must
+                            //keep making passes through the array
+                            sortDone = false;
+                            //Swap the two out-of-order elements
+                           
+                            var temp = avgTemp[i];
+                            avgTemp[i] = avgTemp[i+1];
+                            avgTemp[i+1] = temp;
+                        }
+                            
+                    }
+
+                }while(sortDone == false)
+                //At this point, since we broke out of the while loop, it must 
+                //mean that array is sorted
+                //We should use our showArrays() function to display
+                return avgTemp;
+                showArrays()
+
+            }
+
+        </script>
+
+        <input type=button value="1" onclick="showArrays()">
+        <input type=button value="2" onclick="showByChronological()">
+        <input type=button value="3" onclick="showbyAlphabetical()">
+        <input type=button value="4" onclick="showbyTempAscending()">
+        <input type=button value="5" onclick="showbyTempDescending()">
+
+        <div id="idDivOutput"></div>
+
+
+
+
+    </body>
+</html>

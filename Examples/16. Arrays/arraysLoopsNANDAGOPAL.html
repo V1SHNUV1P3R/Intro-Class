@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <title>Sean gaming</title>
+        
+        <style></style>
+        
+        
+        <script>
+
+            //array for filling numbers
+            var numArray = [];
+
+            //loops for doing stuff
+            var loopCounter = 0;
+
+
+            function fillArray()
+            {
+                //This controls what index position we are going
+                //to place our object into our array(index positioning)
+                var min = idTxtMin.value;
+                var max = idTxtMax.value;
+
+                for(var i = 0; i <= 500; i++)
+                {
+                    numArray.push(i*3);
+                }
+
+                console.log(numArray)
+
+               var output = "";
+
+               //This loop is the same as above, but will control what
+               //we SEE on our page, NOT what gets PUSHED into the array
+               for(var i = 0; i<=500; i++)
+               {
+                output+= numArray[i] + "<br>";
+
+
+               }
+
+               idDivOutput.innerHTML = output;
+
+            }
+            function findByIndex()
+            {
+                var min = idTxtMin.value
+                var max = idTxtMax.value
+
+                var output = ";"
+        
+               for(var i = min ; i <= max ; i++ )
+               {
+                output += numArray[i] + "<br>"
+               }
+               idDivOutput.innerHTML = output;
+
+            }
+
+
+        </script>
+
+
+    </head>
+
+    <body onLoad = "fillArray()">
+       
+        Min number <input type=text id=idTxtMin>
+        <br><br>
+        Max number<input type=text id=idTxtMax>
+        <br><br><br>
+        <input type=button value="find by index" onclick="findByIndex()">
+        <br><br>
+
+        <div id="idDivOutput"></div>
+
+    </body>
+
+
+
+
+
+
+</html>
